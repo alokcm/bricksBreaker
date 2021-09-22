@@ -1,0 +1,53 @@
+[
+    1,
+    [
+        "2dYcS1tOtDXo69tQrtn6qs@6c48a"
+    ],
+    [
+        "_textureSource"
+    ],
+    [
+        "cc.SpriteFrame"
+    ],
+    0,
+    [
+        {
+            "name": "Brick_5_cracked",
+            "rect": {
+                "x": 0,
+                "y": 52,
+                "width": 640,
+                "height": 216
+            },
+            "offset": {
+                "x": 0,
+                "y": 0
+            },
+            "originalSize": {
+                "width": 640,
+                "height": 320
+            },
+            "rotated": false,
+            "capInsets": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "packable": true
+        }
+    ],
+    [
+        0
+    ],
+    0,
+    [
+        0
+    ],
+    [
+        0
+    ],
+    [
+        0
+    ]
+]
