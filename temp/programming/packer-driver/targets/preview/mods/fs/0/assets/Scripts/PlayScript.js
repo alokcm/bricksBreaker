@@ -1,7 +1,7 @@
 System.register(["cc"], function (_export, _context) {
   "use strict";
 
-  var _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp, _crd, ccclass, property, PlayScript;
+  var _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _temp, _crd, ccclass, property, PlayScript;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -29,6 +29,9 @@ System.register(["cc"], function (_export, _context) {
       Prefab = _cc.Prefab;
       instantiate = _cc.instantiate;
       JsonAsset = _cc.JsonAsset;
+      Collider2D = _cc.Collider2D;
+      Contact2DType = _cc.Contact2DType;
+      RigidBody2D = _cc.RigidBody2D;
     }],
     execute: function () {
       _crd = true;
@@ -49,7 +52,7 @@ System.register(["cc"], function (_export, _context) {
        * Math.floor(Math.random() * (max - min + 1)) + min;
        */
 
-      _export("PlayScript", PlayScript = (_dec = ccclass('PlayScript'), _dec2 = property(Node), _dec3 = property(SpriteFrame), _dec4 = property(SpriteFrame), _dec5 = property(Prefab), _dec6 = property(JsonAsset), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
+      _export("PlayScript", PlayScript = (_dec = ccclass('PlayScript'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(SpriteFrame), _dec5 = property(SpriteFrame), _dec6 = property(Prefab), _dec7 = property(JsonAsset), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
         _inheritsLoose(PlayScript, _Component);
 
         function PlayScript() {
@@ -63,13 +66,15 @@ System.register(["cc"], function (_export, _context) {
 
           _initializerDefineProperty(_assertThisInitialized(_this), "sliderSprite", _descriptor, _assertThisInitialized(_this));
 
-          _initializerDefineProperty(_assertThisInitialized(_this), "NormalBricks", _descriptor2, _assertThisInitialized(_this));
+          _initializerDefineProperty(_assertThisInitialized(_this), "ball", _descriptor2, _assertThisInitialized(_this));
 
-          _initializerDefineProperty(_assertThisInitialized(_this), "BrokenBricks", _descriptor3, _assertThisInitialized(_this));
+          _initializerDefineProperty(_assertThisInitialized(_this), "NormalBricks", _descriptor3, _assertThisInitialized(_this));
 
-          _initializerDefineProperty(_assertThisInitialized(_this), "bricksPrefab", _descriptor4, _assertThisInitialized(_this));
+          _initializerDefineProperty(_assertThisInitialized(_this), "BrokenBricks", _descriptor4, _assertThisInitialized(_this));
 
-          _initializerDefineProperty(_assertThisInitialized(_this), "asset", _descriptor5, _assertThisInitialized(_this));
+          _initializerDefineProperty(_assertThisInitialized(_this), "bricksPrefab", _descriptor5, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "asset", _descriptor6, _assertThisInitialized(_this));
 
           _defineProperty(_assertThisInitialized(_this), "posOfSlider", null);
 
@@ -79,11 +84,11 @@ System.register(["cc"], function (_export, _context) {
 
           _defineProperty(_assertThisInitialized(_this), "titleIndex", 1);
 
-          _defineProperty(_assertThisInitialized(_this), "row", 6);
+          _defineProperty(_assertThisInitialized(_this), "destroyBrick", 0);
 
-          _defineProperty(_assertThisInitialized(_this), "column", 3);
+          _defineProperty(_assertThisInitialized(_this), "arrayOfBricksOnScreen", []);
 
-          _defineProperty(_assertThisInitialized(_this), "noBrciks", [7, 8, 9, 13, 14, 15]);
+          _defineProperty(_assertThisInitialized(_this), "ballInitialPosition", void 0);
 
           return _this;
         }
@@ -94,8 +99,68 @@ System.register(["cc"], function (_export, _context) {
           this.posOfSlider = this.sliderSprite.getPosition();
           this.screenWidth = this.node.width;
           this.addBricks();
-          this.titleList = this.asset.json["Symptoms data"][0];
-          console.log(this.titleList);
+          this.titleList = this.asset.json["tileDetails"];
+          console.log('row ' + this.titleList["row"]);
+          console.log('json'); //console.log(this.asset.json["Level"][0]);
+          //console.log(this.asset.json["Level"][2]);
+
+          var collider = this.ball.getComponent(Collider2D);
+
+          if (collider) {
+            collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+          }
+
+          this.ballInitialPosition = this.ball.getPosition();
+          this.addBricks();
+        };
+
+        _proto.onBeginContact = function onBeginContact(selfCollider, otherCollider, contact) {
+          var _this2 = this;
+
+          console.log(selfCollider);
+          console.log(otherCollider);
+          console.log(otherCollider.name);
+
+          if (otherCollider.name == 'brick<BoxCollider2D>') {
+            this.updateBricks(otherCollider);
+            this.destroyBrick++;
+
+            if (this.destroyBrick == 2) {
+              this.arrayOfBricksOnScreen.pop();
+              this.destroyBrick = 0;
+            }
+          }
+
+          if (this.arrayOfBricksOnScreen.length == 0) {
+            this.arrayOfBricksOnScreen = [];
+            setTimeout(function () {
+              _this2.addBricks();
+
+              _this2.ball.setPosition(_this2.ballInitialPosition);
+
+              _this2.ball.getComponent(RigidBody2D).gravityScale = 0.4;
+            }, 500);
+          }
+        };
+
+        _proto.updateBricks = function updateBricks(collider) {
+          var str = collider.getComponent(Sprite).spriteFrame.name;
+          console.log(str);
+
+          for (var i = 0; i < this.NormalBricks.length; i++) {
+            //console.log()
+            if (str == this.NormalBricks[i].name) {
+              collider.getComponent(Sprite).spriteFrame = this.BrokenBricks[i];
+              break;
+            }
+
+            if (str == this.BrokenBricks[i].name) {
+              collider.getComponent(Sprite).spriteFrame = this.BrokenBricks[i];
+              collider.getComponent(Sprite).destroy();
+              collider.destroy();
+              break;
+            }
+          }
         };
 
         _proto.moveSliderOnTouch = function moveSliderOnTouch(touch, event) {
@@ -122,23 +187,26 @@ System.register(["cc"], function (_export, _context) {
         };
 
         _proto.addBricks = function addBricks() {
-          var k = 1,
-              loc = 0;
+          var row = 4;
+          var column = 4;
+          var startPosOfBricks = Math.floor(column / 2) * -128;
 
-          for (var i = 1; i <= this.row; i++) {
-            for (var j = 1; j <= this.column; j++) {
-              if (k++ == this.noBrciks[loc]) {
-                loc++;
-              } else {}
+          for (var i = 1; i <= row; i++) {
+            var xy = startPosOfBricks;
+
+            for (var j = 1; j <= column; j++) {
+              var x = Math.floor(Math.random() * (7 - 0 + 1)) + 0;
+              var ch = instantiate(this.bricksPrefab);
+              ch.getComponent(Sprite).spriteFrame = this.NormalBricks[x];
+              this.node.addChild(ch);
+              ch.setPosition(new Vec3(xy, i * 43, 1));
+              this.arrayOfBricksOnScreen.push(ch);
+              xy += 128;
             }
-
-            var x = Math.floor(Math.random() * (7 - 0 + 1)) + 0;
-            var ch = instantiate(this.bricksPrefab);
-            console.log(ch);
-            ch.getComponent(Sprite).spriteFrame = this.NormalBricks[x];
-            this.node.addChild(ch);
-            ch.setPosition(new Vec3(0, i * 43, 1));
           }
+        };
+
+        _proto.update = function update() {//console.log(this.ball.getPosition())
         } // update (deltaTime: number) {
         //     // [4]
         // }
@@ -152,28 +220,35 @@ System.register(["cc"], function (_export, _context) {
         initializer: function initializer() {
           return null;
         }
-      }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "NormalBricks", [_dec3], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return [];
-        }
-      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "BrokenBricks", [_dec4], {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        initializer: function initializer() {
-          return [];
-        }
-      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "bricksPrefab", [_dec5], {
+      }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "ball", [_dec3], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function initializer() {
           return null;
         }
-      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "asset", [_dec6], {
+      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "NormalBricks", [_dec4], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return [];
+        }
+      }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "BrokenBricks", [_dec5], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return [];
+        }
+      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "bricksPrefab", [_dec6], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "asset", [_dec7], {
         configurable: true,
         enumerable: true,
         writable: true,
