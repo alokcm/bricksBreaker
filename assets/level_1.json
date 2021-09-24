@@ -1,24 +1,26 @@
 {
     "level" : 1,
-    "row" : 4,
-    "column" : 4,
+    "rows" : 1,
+    "columns" : 1,
     "tileDetails" :
         {
+            "noBricks" : [2,3,4,7,8,12],
+
             "1" : "show",
-            "2" : "rewardType",
-            "3" : "show",
-            "4" : "show",
+            "2" : "hide",
+            "3" : "hide",
+            "4" : "hide",
             "5" : "rewardType",
             "6" : "show",
-            "7" : "show",
+            "7" : "hide",
             "8" : "hide",
             "9" : "rewardType",
             "10" : "show",
-            "11" : "hide",
+            "11" : "show",
             "12" : "hide",
             "13" : "rewardType",
-            "14" : "hide",
-            "15" : "hide",
-            "16" : "hide"
+            "14" : "show",
+            "15" : "show",
+            "16" : "show"
         }
 }

@@ -167,7 +167,7 @@ System.register([], function (_export, _context) {
     var launchScene = settings.launchScene; // load scene
 
     cc.director.loadScene(launchScene, null, function () {
-      cc.view.setDesignResolutionSize(1080, 1920, 2);
+      cc.view.setDesignResolutionSize(1080, 1920, 4);
       console.log("Success to load scene: ".concat(launchScene));
     });
   }

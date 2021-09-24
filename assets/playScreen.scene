@@ -686,7 +686,7 @@
     "_group": 1,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
+    "_friction": 0.9,
     "_restitution": 2.3,
     "_offset": {
       "__type__": "cc.Vec2",
@@ -1625,10 +1625,38 @@
       "__uuid__": "38390422-c8c9-4845-9f02-d2aebe815f31",
       "__expectedType__": "cc.Prefab"
     },
-    "asset": {
-      "__uuid__": "1383a0d5-7a17-480f-ba59-c6c7d48588b3",
-      "__expectedType__": "cc.JsonAsset"
-    },
+    "asset": [
+      {
+        "__uuid__": "1383a0d5-7a17-480f-ba59-c6c7d48588b3",
+        "__expectedType__": "cc.JsonAsset"
+      },
+      {
+        "__uuid__": "a74a44e6-d732-41c0-af3d-ba1363bd881f",
+        "__expectedType__": "cc.JsonAsset"
+      },
+      {
+        "__uuid__": "cc23ad32-2642-4785-9d8e-b7e5136e6d41",
+        "__expectedType__": "cc.JsonAsset"
+      }
+    ],
+    "Rewards": [
+      {
+        "__uuid__": "44a0a607-b2a7-4119-9743-ff76e6486977@f9941",
+        "__expectedType__": "cc.SpriteFrame"
+      },
+      {
+        "__uuid__": "031c6ab0-2022-4dbe-b591-bb37bdc20dd3@f9941",
+        "__expectedType__": "cc.SpriteFrame"
+      },
+      {
+        "__uuid__": "545e25eb-be6b-4328-ad6f-ba9f1a3fd167@f9941",
+        "__expectedType__": "cc.SpriteFrame"
+      },
+      {
+        "__uuid__": "7c27c75c-ced7-4d31-b4c4-75efac5e3820@f9941",
+        "__expectedType__": "cc.SpriteFrame"
+      }
+    ],
     "_id": "49egU316FDp5SYGRX0L4d3"
   },
   {

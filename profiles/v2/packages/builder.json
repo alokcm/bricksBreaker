@@ -9,15 +9,11 @@
     "platform": "web-mobile",
     "scenes": [
       {
-        "url": "db://assets/mainScreen.scene",
-        "uuid": "3882d90d-da09-4a66-af43-a5646137deaf",
-        "inBundle": false
-      },
-      {
         "url": "db://assets/playScreen.scene",
         "uuid": "bf766d2c-e1b4-4683-b22c-e192251a477d"
       }
-    ]
+    ],
+    "startScene": "bf766d2c-e1b4-4683-b22c-e192251a477d"
   },
   "BuildTaskManager": {
     "taskMap": {
@@ -25,7 +21,7 @@
         "id": "1632289708711",
         "progress": 1,
         "state": "success",
-        "message": "23-09-2021 15:34 Build success in 11065 ms!",
+        "message": "24-09-2021 19:16 Build success in 4870 ms!",
         "options": {
           "name": "BricksBreaker",
           "platform": "web-mobile",
@@ -40,13 +36,8 @@
           "experimentalEraseModules": false,
           "compressTexture": true,
           "packAutoAtlas": true,
-          "startScene": "3882d90d-da09-4a66-af43-a5646137deaf",
+          "startScene": "bf766d2c-e1b4-4683-b22c-e192251a477d",
           "scenes": [
-            {
-              "url": "db://assets/mainScreen.scene",
-              "uuid": "3882d90d-da09-4a66-af43-a5646137deaf",
-              "inBundle": false
-            },
             {
               "url": "db://assets/playScreen.scene",
               "uuid": "bf766d2c-e1b4-4683-b22c-e192251a477d"
@@ -66,7 +57,7 @@
             }
           }
         },
-        "time": "23-09-2021 15:34",
+        "time": "24-09-2021 19:16",
         "dirty": false
       }
     }

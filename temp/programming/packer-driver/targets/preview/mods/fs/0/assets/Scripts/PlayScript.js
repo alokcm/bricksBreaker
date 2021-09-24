@@ -1,7 +1,7 @@
 System.register(["cc"], function (_export, _context) {
   "use strict";
 
-  var _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _temp, _crd, ccclass, property, PlayScript;
+  var _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, UITransform, Vec2, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _temp, _crd, ccclass, property, PlayScript;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -32,6 +32,8 @@ System.register(["cc"], function (_export, _context) {
       Collider2D = _cc.Collider2D;
       Contact2DType = _cc.Contact2DType;
       RigidBody2D = _cc.RigidBody2D;
+      UITransform = _cc.UITransform;
+      Vec2 = _cc.Vec2;
     }],
     execute: function () {
       _crd = true;
@@ -52,7 +54,7 @@ System.register(["cc"], function (_export, _context) {
        * Math.floor(Math.random() * (max - min + 1)) + min;
        */
 
-      _export("PlayScript", PlayScript = (_dec = ccclass('PlayScript'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(SpriteFrame), _dec5 = property(SpriteFrame), _dec6 = property(Prefab), _dec7 = property(JsonAsset), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
+      _export("PlayScript", PlayScript = (_dec = ccclass('PlayScript'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(SpriteFrame), _dec5 = property(SpriteFrame), _dec6 = property(Prefab), _dec7 = property(JsonAsset), _dec8 = property(SpriteFrame), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
         _inheritsLoose(PlayScript, _Component);
 
         function PlayScript() {
@@ -76,11 +78,13 @@ System.register(["cc"], function (_export, _context) {
 
           _initializerDefineProperty(_assertThisInitialized(_this), "asset", _descriptor6, _assertThisInitialized(_this));
 
+          _initializerDefineProperty(_assertThisInitialized(_this), "Rewards", _descriptor7, _assertThisInitialized(_this));
+
           _defineProperty(_assertThisInitialized(_this), "posOfSlider", null);
 
           _defineProperty(_assertThisInitialized(_this), "screenWidth", void 0);
 
-          _defineProperty(_assertThisInitialized(_this), "titleList", []);
+          _defineProperty(_assertThisInitialized(_this), "tileDetails", []);
 
           _defineProperty(_assertThisInitialized(_this), "titleIndex", 1);
 
@@ -90,6 +94,12 @@ System.register(["cc"], function (_export, _context) {
 
           _defineProperty(_assertThisInitialized(_this), "ballInitialPosition", void 0);
 
+          _defineProperty(_assertThisInitialized(_this), "rows", null);
+
+          _defineProperty(_assertThisInitialized(_this), "columns", null);
+
+          _defineProperty(_assertThisInitialized(_this), "level", 1);
+
           return _this;
         }
 
@@ -98,12 +108,8 @@ System.register(["cc"], function (_export, _context) {
         _proto.start = function start() {
           this.posOfSlider = this.sliderSprite.getPosition();
           this.screenWidth = this.node.width;
-          this.addBricks();
-          this.titleList = this.asset.json["tileDetails"];
-          console.log('row ' + this.titleList["row"]);
-          console.log('json'); //console.log(this.asset.json["Level"][0]);
-          //console.log(this.asset.json["Level"][2]);
-
+          this.tileDetails = this.asset[0].json["tileDetails"];
+          console.log('row in the script  ' + this.asset[0].json["rows"]);
           var collider = this.ball.getComponent(Collider2D);
 
           if (collider) {
@@ -111,15 +117,30 @@ System.register(["cc"], function (_export, _context) {
           }
 
           this.ballInitialPosition = this.ball.getPosition();
+          this.fetchScript(1);
           this.addBricks();
+          console.log('printing the tile details  : '); // for(let i = 1,k=1;i<=this.asset[0].json['rows'];i++)
+          // {
+          //     for(let j =1;j<=this.asset[0].json['columns'];j++)
+          //     {
+          //         console.log(k + " : " + this.tileDetails[`${k++}`]);
+          //     }
+          // }
+
+          console.log('start ended');
+          console.log(this.bricksPrefab.data.width);
+        };
+
+        _proto.fetchScript = function fetchScript(lev) {
+          this.tileDetails = this.asset[lev - 1].json["tileDetails"];
+          this.rows = this.asset[lev - 1].json["rows"];
+          this.columns = this.asset[lev - 1].json["columns"];
         };
 
         _proto.onBeginContact = function onBeginContact(selfCollider, otherCollider, contact) {
           var _this2 = this;
 
-          console.log(selfCollider);
-          console.log(otherCollider);
-          console.log(otherCollider.name);
+          console.log(otherCollider); //console.log(otherCollider.name);
 
           if (otherCollider.name == 'brick<BoxCollider2D>') {
             this.updateBricks(otherCollider);
@@ -134,21 +155,27 @@ System.register(["cc"], function (_export, _context) {
           if (this.arrayOfBricksOnScreen.length == 0) {
             this.arrayOfBricksOnScreen = [];
             setTimeout(function () {
+              _this2.level++;
+
+              _this2.fetchScript(_this2.level);
+
               _this2.addBricks();
 
               _this2.ball.setPosition(_this2.ballInitialPosition);
 
-              _this2.ball.getComponent(RigidBody2D).gravityScale = 0.4;
+              _this2.ball.getComponent(RigidBody2D).linearVelocity = new Vec2(0, 0);
+
+              if (_this2.level == 3) {
+                _this2.level = 0;
+              }
             }, 500);
           }
         };
 
         _proto.updateBricks = function updateBricks(collider) {
           var str = collider.getComponent(Sprite).spriteFrame.name;
-          console.log(str);
 
           for (var i = 0; i < this.NormalBricks.length; i++) {
-            //console.log()
             if (str == this.NormalBricks[i].name) {
               collider.getComponent(Sprite).spriteFrame = this.BrokenBricks[i];
               break;
@@ -179,30 +206,39 @@ System.register(["cc"], function (_export, _context) {
           this.sliderSprite.on(Node.EventType.TOUCH_MOVE, this.moveSliderOnTouch, this);
         };
 
-        _proto.onClick = function onClick() {
-          var str = this.titleList[this.titleIndex];
-          console.log(str);
-          this.titleIndex++;
-          if (this.titleIndex > 13) this.titleIndex = 1;
-        };
-
         _proto.addBricks = function addBricks() {
-          var row = 4;
-          var column = 4;
-          var startPosOfBricks = Math.floor(column / 2) * -128;
+          var startX = -(this.screenWidth / 2);
+          var startY = this.node.getComponent(UITransform).height / 2;
+          var bricksWidth = this.screenWidth / this.columns;
+          var bricksHeight = this.bricksPrefab.data.height * bricksWidth / this.bricksPrefab.data.width;
+          startX += bricksWidth / 2;
+          startY -= bricksHeight / 2;
+          var scaleX = bricksWidth / this.bricksPrefab.data.width;
+          var scaleY = bricksHeight / this.bricksPrefab.data.height;
+          var noBricks = this.tileDetails["noBricks"][0];
+          console.log('test no Bricks');
+          console.log(noBricks);
 
-          for (var i = 1; i <= row; i++) {
-            var xy = startPosOfBricks;
+          for (var i = 1, k = 1; i <= this.rows; i++) {
+            var initX = startX;
+            console.log('loop ran');
 
-            for (var j = 1; j <= column; j++) {
-              var x = Math.floor(Math.random() * (7 - 0 + 1)) + 0;
-              var ch = instantiate(this.bricksPrefab);
-              ch.getComponent(Sprite).spriteFrame = this.NormalBricks[x];
-              this.node.addChild(ch);
-              ch.setPosition(new Vec3(xy, i * 43, 1));
-              this.arrayOfBricksOnScreen.push(ch);
-              xy += 128;
+            for (var j = 1; j <= this.columns; j++) {
+              if (this.tileDetails["" + k] != "hide") {
+                var x = Math.floor(Math.random() * (7 - 0 + 1)) + 0;
+                var ch = instantiate(this.bricksPrefab);
+                this.node.addChild(ch);
+                ch.getComponent(Sprite).spriteFrame = this.NormalBricks[x];
+                ch.setScale(scaleX, scaleY);
+                ch.setPosition(new Vec3(initX, startY, 1));
+                this.arrayOfBricksOnScreen.push(ch);
+              }
+
+              k++;
+              initX += bricksWidth;
             }
+
+            startY -= bricksHeight;
           }
         };
 
@@ -253,7 +289,14 @@ System.register(["cc"], function (_export, _context) {
         enumerable: true,
         writable: true,
         initializer: function initializer() {
-          return null;
+          return [];
+        }
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "Rewards", [_dec8], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return [];
         }
       })), _class2)) || _class));
 

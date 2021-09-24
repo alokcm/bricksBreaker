@@ -1,0 +1,53 @@
+[
+    1,
+    [
+        "44oKYHsqdBGZdD/3bmSGl3@6c48a"
+    ],
+    [
+        "_textureSource"
+    ],
+    [
+        "cc.SpriteFrame"
+    ],
+    0,
+    [
+        {
+            "name": "fruitApple",
+            "rect": {
+                "x": 37,
+                "y": 19,
+                "width": 736,
+                "height": 740
+            },
+            "offset": {
+                "x": 5,
+                "y": 11
+            },
+            "originalSize": {
+                "width": 800,
+                "height": 800
+            },
+            "rotated": false,
+            "capInsets": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "packable": true
+        }
+    ],
+    [
+        0
+    ],
+    0,
+    [
+        0
+    ],
+    [
+        0
+    ],
+    [
+        0
+    ]
+]
