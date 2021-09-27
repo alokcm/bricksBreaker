@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, director } from 'cc';
+import { _decorator, Component, Node, director, absMaxComponent } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
@@ -13,43 +13,36 @@ const { ccclass, property } = _decorator;
  * ManualUrl = https://docs.cocos.com/creator/3.3/manual/en/
  *
  */
- 
+
+
 @ccclass('SplashScreen')
 export class SplashScreen extends Component {
-    // [1]
-    // dummy = '';
 
-    // [2]
-    // @property
-    // serializableDummy = 0;
+
+    
+
     @property(Node)
     playButton : Node = null;
 
     start () {
-        director.preloadScene('playScreen');
+        //director.preloadScene('playScreen');
     }
+
     onLoad()
     {
-        this.playButton.on(Node.EventType.MOUSE_DOWN,this.changeScreen,this);
-        
+        this.playButton.on(Node.EventType.TOUCH_START,this.moveScreen,this);
+        console.log('on load called');
     }
 
-    changeScreen(event)
+
+    moveScreen()
     {
+        console.log('clicked diff');
         director.loadScene('playScreen');
     }
-    // update (deltaTime: number) {
-    //     // [4]
-    // }
+    changeScreen()
+    {
+        console.log('clicked');
+        director.loadScene('playScreen');
+    }
 }
-
-/**
- * [1] Class member could be defined like this.
- * [2] Use `property` decorator if your want the member to be serializable.
- * [3] Your initialization goes here.
- * [4] Your update function goes here.
- *
- * Learn more about scripting: https://docs.cocos.com/creator/3.3/manual/en/scripting/
- * Learn more about CCClass: https://docs.cocos.com/creator/3.3/manual/en/scripting/ccclass.html
- * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.3/manual/en/scripting/life-cycle-callbacks.html
- */

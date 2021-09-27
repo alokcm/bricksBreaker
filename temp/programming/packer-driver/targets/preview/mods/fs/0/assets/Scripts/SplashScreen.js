@@ -63,20 +63,23 @@ System.register(["cc"], function (_export, _context) {
 
         var _proto = SplashScreen.prototype;
 
-        _proto.start = function start() {
-          director.preloadScene('playScreen');
+        _proto.start = function start() {//director.preloadScene('playScreen');
         };
 
         _proto.onLoad = function onLoad() {
-          this.playButton.on(Node.EventType.MOUSE_DOWN, this.changeScreen, this);
+          this.playButton.on(Node.EventType.TOUCH_START, this.moveScreen, this);
+          console.log('on load called');
         };
 
-        _proto.changeScreen = function changeScreen(event) {
+        _proto.moveScreen = function moveScreen() {
+          console.log('clicked diff');
           director.loadScene('playScreen');
-        } // update (deltaTime: number) {
-        //     // [4]
-        // }
-        ;
+        };
+
+        _proto.changeScreen = function changeScreen() {
+          console.log('clicked');
+          director.loadScene('playScreen');
+        };
 
         return SplashScreen;
       }(Component), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "playButton", [_dec2], {
@@ -87,17 +90,6 @@ System.register(["cc"], function (_export, _context) {
           return null;
         }
       })), _class2)) || _class));
-      /**
-       * [1] Class member could be defined like this.
-       * [2] Use `property` decorator if your want the member to be serializable.
-       * [3] Your initialization goes here.
-       * [4] Your update function goes here.
-       *
-       * Learn more about scripting: https://docs.cocos.com/creator/3.3/manual/en/scripting/
-       * Learn more about CCClass: https://docs.cocos.com/creator/3.3/manual/en/scripting/ccclass.html
-       * Learn more about life-cycle callbacks: https://docs.cocos.com/creator/3.3/manual/en/scripting/life-cycle-callbacks.html
-       */
-
 
       _cclegacy._RF.pop();
 

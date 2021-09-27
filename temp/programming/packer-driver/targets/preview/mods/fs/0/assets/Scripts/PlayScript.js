@@ -1,7 +1,7 @@
 System.register(["cc"], function (_export, _context) {
   "use strict";
 
-  var _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, UITransform, Vec2, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _temp, _crd, ccclass, property, PlayScript;
+  var _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, UITransform, Vec2, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _temp, _crd, ccclass, property, BRICKS, PlayScript;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -42,6 +42,24 @@ System.register(["cc"], function (_export, _context) {
 
       ccclass = _decorator.ccclass;
       property = _decorator.property;
+      /* "1" : "show",
+       "2" : "hide",
+       "3" : "hide",
+       "4" : "hide",
+       "5" : "rewardType",
+       "6" : "show",
+       "7" : "hide",
+       "8" : "hide",
+       "9" : "rewardType",
+       "10" : "show",
+       "11" : "show",
+       "12" : "hide",
+       "13" : "rewardType",
+       "14" : "show",
+       "15" : "show",
+       "16" : "show"
+       */
+
       /**
        * Predefined variables
        * Name = PlayScript
@@ -53,6 +71,12 @@ System.register(["cc"], function (_export, _context) {
        * ManualUrl = https://docs.cocos.com/creator/3.3/manual/en/
        * Math.floor(Math.random() * (max - min + 1)) + min;
        */
+
+      (function (BRICKS) {
+        BRICKS[BRICKS["IN_TWO_COLLISION"] = 1] = "IN_TWO_COLLISION";
+        BRICKS[BRICKS["IN_FOUR_COLLISION"] = 2] = "IN_FOUR_COLLISION";
+        BRICKS[BRICKS["HAS_REWARDS"] = 3] = "HAS_REWARDS";
+      })(BRICKS || (BRICKS = {}));
 
       _export("PlayScript", PlayScript = (_dec = ccclass('PlayScript'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(SpriteFrame), _dec5 = property(SpriteFrame), _dec6 = property(Prefab), _dec7 = property(JsonAsset), _dec8 = property(SpriteFrame), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
         _inheritsLoose(PlayScript, _Component);
@@ -86,10 +110,6 @@ System.register(["cc"], function (_export, _context) {
 
           _defineProperty(_assertThisInitialized(_this), "tileDetails", []);
 
-          _defineProperty(_assertThisInitialized(_this), "titleIndex", 1);
-
-          _defineProperty(_assertThisInitialized(_this), "destroyBrick", 0);
-
           _defineProperty(_assertThisInitialized(_this), "arrayOfBricksOnScreen", []);
 
           _defineProperty(_assertThisInitialized(_this), "ballInitialPosition", void 0);
@@ -100,6 +120,18 @@ System.register(["cc"], function (_export, _context) {
 
           _defineProperty(_assertThisInitialized(_this), "level", 1);
 
+          _defineProperty(_assertThisInitialized(_this), "ch", void 0);
+
+          _defineProperty(_assertThisInitialized(_this), "startXPos", null);
+
+          _defineProperty(_assertThisInitialized(_this), "startYPos", null);
+
+          _defineProperty(_assertThisInitialized(_this), "bricksWidthTemp", null);
+
+          _defineProperty(_assertThisInitialized(_this), "bricksHeightTemp", null);
+
+          _defineProperty(_assertThisInitialized(_this), "scaleFactor", null);
+
           return _this;
         }
 
@@ -108,8 +140,16 @@ System.register(["cc"], function (_export, _context) {
         _proto.start = function start() {
           this.posOfSlider = this.sliderSprite.getPosition();
           this.screenWidth = this.node.width;
-          this.tileDetails = this.asset[0].json["tileDetails"];
-          console.log('row in the script  ' + this.asset[0].json["rows"]);
+          this.tileDetails = this.asset[this.level - 1].json["tileDetails"];
+          console.log(this.tileDetails);
+          console.log('row in the script  ' + this.asset[0].json["rows"] + ' columns : ' + this.asset[0].json["columns"]);
+          this.fetchScript(this.level);
+          var wallLeft = this.node.getChildByName('wallLeft');
+          var wallRight = this.node.getChildByName('wallRight');
+          var wallTop = this.node.getChildByName('wallTop');
+          wallLeft.setScale(1, this.node.getComponent(UITransform).height / 1920);
+          wallRight.setScale(1, this.node.getComponent(UITransform).height / 1920);
+          wallTop.setScale(this.screenWidth / 1080, 1);
           var collider = this.ball.getComponent(Collider2D);
 
           if (collider) {
@@ -117,43 +157,32 @@ System.register(["cc"], function (_export, _context) {
           }
 
           this.ballInitialPosition = this.ball.getPosition();
-          this.fetchScript(1);
-          this.addBricks();
-          console.log('printing the tile details  : '); // for(let i = 1,k=1;i<=this.asset[0].json['rows'];i++)
-          // {
-          //     for(let j =1;j<=this.asset[0].json['columns'];j++)
-          //     {
-          //         console.log(k + " : " + this.tileDetails[`${k++}`]);
-          //     }
-          // }
-
           console.log('start ended');
-          console.log(this.bricksPrefab.data.width);
+          this.addBricks();
         };
 
         _proto.fetchScript = function fetchScript(lev) {
           this.tileDetails = this.asset[lev - 1].json["tileDetails"];
           this.rows = this.asset[lev - 1].json["rows"];
           this.columns = this.asset[lev - 1].json["columns"];
+          this.startXPos = -(this.screenWidth / 2);
+          this.startYPos = this.node.getComponent(UITransform).height / 2;
+          this.bricksWidthTemp = this.screenWidth / this.columns;
+          this.bricksHeightTemp = this.bricksPrefab.data.height * this.bricksWidthTemp / this.bricksPrefab.data.width;
+          this.startXPos += this.bricksWidthTemp / 2;
+          this.startYPos -= this.bricksHeightTemp / 2;
+          this.scaleFactor = this.bricksWidthTemp / this.bricksPrefab.data.width;
+          this.bricksPrefab.data.setScale(this.scaleFactor, this.scaleFactor);
         };
 
         _proto.onBeginContact = function onBeginContact(selfCollider, otherCollider, contact) {
           var _this2 = this;
 
-          console.log(otherCollider); //console.log(otherCollider.name);
-
           if (otherCollider.name == 'brick<BoxCollider2D>') {
             this.updateBricks(otherCollider);
-            this.destroyBrick++;
-
-            if (this.destroyBrick == 2) {
-              this.arrayOfBricksOnScreen.pop();
-              this.destroyBrick = 0;
-            }
           }
 
           if (this.arrayOfBricksOnScreen.length == 0) {
-            this.arrayOfBricksOnScreen = [];
             setTimeout(function () {
               _this2.level++;
 
@@ -166,27 +195,23 @@ System.register(["cc"], function (_export, _context) {
               _this2.ball.getComponent(RigidBody2D).linearVelocity = new Vec2(0, 0);
 
               if (_this2.level == 3) {
-                _this2.level = 0;
+                _this2.level = 1;
               }
-            }, 500);
+            }, 200);
           }
         };
 
         _proto.updateBricks = function updateBricks(collider) {
-          var str = collider.getComponent(Sprite).spriteFrame.name;
+          collider.node.brickTime--;
 
-          for (var i = 0; i < this.NormalBricks.length; i++) {
-            if (str == this.NormalBricks[i].name) {
-              collider.getComponent(Sprite).spriteFrame = this.BrokenBricks[i];
-              break;
-            }
+          if (collider.node.brickTime == 1) {
+            collider.getComponent(Sprite).spriteFrame = this.BrokenBricks[collider.node.colorNumber];
+          }
 
-            if (str == this.BrokenBricks[i].name) {
-              collider.getComponent(Sprite).spriteFrame = this.BrokenBricks[i];
-              collider.getComponent(Sprite).destroy();
-              collider.destroy();
-              break;
-            }
+          if (collider.node.brickTime == 0) {
+            collider.getComponent(Sprite).destroy();
+            this.arrayOfBricksOnScreen.pop();
+            collider.destroy();
           }
         };
 
@@ -207,46 +232,40 @@ System.register(["cc"], function (_export, _context) {
         };
 
         _proto.addBricks = function addBricks() {
-          var startX = -(this.screenWidth / 2);
-          var startY = this.node.getComponent(UITransform).height / 2;
-          var bricksWidth = this.screenWidth / this.columns;
-          var bricksHeight = this.bricksPrefab.data.height * bricksWidth / this.bricksPrefab.data.width;
-          startX += bricksWidth / 2;
-          startY -= bricksHeight / 2;
-          var scaleX = bricksWidth / this.bricksPrefab.data.width;
-          var scaleY = bricksHeight / this.bricksPrefab.data.height;
-          var noBricks = this.tileDetails["noBricks"][0];
-          console.log('test no Bricks');
-          console.log(noBricks);
+          for (var i = 0; i < this.tileDetails.length; i++) {
+            var type = this.tileDetails[i]["type"];
+            console.log(type);
+            var posX = this.startXPos + Math.floor(this.tileDetails[i]["index"] % this.columns) * this.bricksWidthTemp;
+            var posY = this.startYPos - Math.floor(this.tileDetails[i]["index"] / this.columns) * this.bricksHeightTemp;
+            console.log(posX, posY);
+            this.ch = instantiate(this.bricksPrefab);
+            this.node.addChild(this.ch);
+            this.ch.setPosition(new Vec3(posX, posY, 1));
+            this.ch.getComponent(Sprite).spriteFrame = this.NormalBricks[this.tileDetails[i]["color"] - 1];
+            this.ch.colorNumber = this.tileDetails[i]["color"] - 1;
+            this.arrayOfBricksOnScreen.push(this.ch);
 
-          for (var i = 1, k = 1; i <= this.rows; i++) {
-            var initX = startX;
-            console.log('loop ran');
+            switch (type) {
+              case BRICKS.IN_TWO_COLLISION:
+                this.ch.brickTime = 2;
+                this.ch.reward = false;
+                break;
 
-            for (var j = 1; j <= this.columns; j++) {
-              if (this.tileDetails["" + k] != "hide") {
-                var x = Math.floor(Math.random() * (7 - 0 + 1)) + 0;
-                var ch = instantiate(this.bricksPrefab);
-                this.node.addChild(ch);
-                ch.getComponent(Sprite).spriteFrame = this.NormalBricks[x];
-                ch.setScale(scaleX, scaleY);
-                ch.setPosition(new Vec3(initX, startY, 1));
-                this.arrayOfBricksOnScreen.push(ch);
-              }
+              case BRICKS.IN_FOUR_COLLISION:
+                this.ch.brickTime = 4;
+                this.ch.reward = false;
+                break;
 
-              k++;
-              initX += bricksWidth;
+              case BRICKS.HAS_REWARDS:
+                this.ch.brickTime = 2;
+                this.ch.reward = true;
+                break;
+
+              default:
+                console.log('No details for this bricks.');
             }
-
-            startY -= bricksHeight;
           }
         };
-
-        _proto.update = function update() {//console.log(this.ball.getPosition())
-        } // update (deltaTime: number) {
-        //     // [4]
-        // }
-        ;
 
         return PlayScript;
       }(Component), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "sliderSprite", [_dec2], {
