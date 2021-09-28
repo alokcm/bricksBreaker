@@ -2,6 +2,7 @@
     "level" : 2,
     "rows" : 5,
     "columns" : 3,
+    "maxBall" : 3,
     "tileDetails" :
         [
             {
@@ -17,42 +18,57 @@
             {
                 "index":2,
                 "type":3,
-                "color":3
+                "color":1
             },
             {
                 "index":3,
                 "type":2,
-                "color":3
-            },
-            {
-                "index":4,
-                "type":1,
-                "color":2
+                "color":4
             },
             {
                 "index":5,
-                "type":3,
-                "color":1
+                "type":1,
+                "color":4
             },
             {
                 "index":6,
+                "type":3,
+                "color":3
+            },
+            {
+                "index":7,
                 "type":2,
-                "color":1
+                "color":5
             },
             {
                 "index":8,
                 "type":1,
-                "color":2
+                "color":3
             },
             {
                 "index":9,
                 "type":2,
-                "color":3
+                "color":7
+            },
+            {
+                "index":11,
+                "type":3,
+                "color":7
             },
             {
                 "index":12,
-                "type":3,
-                "color":3
+                "type":2,
+                "color":5
+            },
+            {
+                "index":13,
+                "type":2,
+                "color":6
+            },
+            {
+                "index":14,
+                "type":2,
+                "color":5
             }
         ]
 }
