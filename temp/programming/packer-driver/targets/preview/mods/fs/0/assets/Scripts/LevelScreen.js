@@ -1,7 +1,7 @@
-System.register(["cc"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _context) {
   "use strict";
 
-  var _cclegacy, _decorator, Component, Node, Prefab, instantiate, _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _temp, _crd, ccclass, property, LevelScreen;
+  var _reporterNs, _cclegacy, _decorator, Component, Node, Prefab, instantiate, Label, director, SingletonClass, _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _temp, _crd, ccclass, property, LevelManager, LevelScreen;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -17,14 +17,24 @@ System.register(["cc"], function (_export, _context) {
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
+  function _reportPossibleCrUseOfSingletonClass(extras) {
+    _reporterNs.report("SingletonClass", "./SingletonClass", _context.meta, extras);
+  }
+
   return {
-    setters: [function (_cc) {
+    setters: [function (_unresolved_) {
+      _reporterNs = _unresolved_;
+    }, function (_cc) {
       _cclegacy = _cc.cclegacy;
       _decorator = _cc._decorator;
       Component = _cc.Component;
       Node = _cc.Node;
       Prefab = _cc.Prefab;
       instantiate = _cc.instantiate;
+      Label = _cc.Label;
+      director = _cc.director;
+    }, function (_unresolved_2) {
+      SingletonClass = _unresolved_2.SingletonClass;
     }],
     execute: function () {
       _crd = true;
@@ -33,6 +43,10 @@ System.register(["cc"], function (_export, _context) {
 
       ccclass = _decorator.ccclass;
       property = _decorator.property;
+      LevelManager = (_crd && SingletonClass === void 0 ? (_reportPossibleCrUseOfSingletonClass({
+        error: Error()
+      }), SingletonClass) : SingletonClass).getInstance();
+      console.log('Level : ', LevelManager.getLevel());
       /**
        * Predefined variables
        * Name = LevelScreen
@@ -42,10 +56,9 @@ System.register(["cc"], function (_export, _context) {
        * FileBasenameNoExtension = LevelScreen
        * URL = db://assets/Scripts/LevelScreen.ts
        * ManualUrl = https://docs.cocos.com/creator/3.3/manual/en/
-       *
        */
 
-      _export("LevelScreen", LevelScreen = (_dec = ccclass('LevelScreen'), _dec2 = property(Node), _dec3 = property(Prefab), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
+      _export("LevelScreen", LevelScreen = (_dec = ccclass('LevelScreen'), _dec2 = property(Node), _dec3 = property(Prefab), _dec4 = property(Node), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
         _inheritsLoose(LevelScreen, _Component);
 
         function LevelScreen() {
@@ -61,6 +74,10 @@ System.register(["cc"], function (_export, _context) {
 
           _initializerDefineProperty(_assertThisInitialized(_this), "levelButton", _descriptor2, _assertThisInitialized(_this));
 
+          _initializerDefineProperty(_assertThisInitialized(_this), "playButton", _descriptor3, _assertThisInitialized(_this));
+
+          _defineProperty(_assertThisInitialized(_this), "levelNumber", null);
+
           _defineProperty(_assertThisInitialized(_this), "ch", null);
 
           return _this;
@@ -72,14 +89,37 @@ System.register(["cc"], function (_export, _context) {
           this.ch = instantiate(this.levelButton);
           var content = this.scrollView.getChildByName('view').getChildByName('content');
 
-          for (var i = 1; i < 10; i++) {
+          for (var i = 1; i <= 3; i++) {
             this.ch = instantiate(this.levelButton);
+            console.log(this.ch);
+            console.log('printing component');
+            this.ch.getChildByName('Label').getComponent(Label).string = "" + i;
+            this.ch.on(Node.EventType.TOUCH_START, this.levelSelected, this);
+            this.ch.buttonNumber = i;
             content.addChild(this.ch);
           }
         };
 
         _proto.start = function start() {
           this.addLevel();
+        };
+
+        _proto.onLoad = function onLoad() {
+          this.playButton.on(Node.EventType.TOUCH_START, this.loadGame, this);
+        };
+
+        _proto.loadGame = function loadGame() {
+          console.log('play button clicked');
+          director.loadScene('playScreen');
+        };
+
+        _proto.levelSelected = function levelSelected(event) {
+          console.log(event);
+          console.log(event.currentTarget.buttonNumber);
+          this.levelNumber = event.currentTarget.buttonNumber;
+          console.log('level clicked');
+          LevelManager.setLevel(event.currentTarget.buttonNumber);
+          console.log(LevelManager.getLevel());
         };
 
         return LevelScreen;
@@ -91,6 +131,13 @@ System.register(["cc"], function (_export, _context) {
           return null;
         }
       }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "levelButton", [_dec3], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "playButton", [_dec4], {
         configurable: true,
         enumerable: true,
         writable: true,

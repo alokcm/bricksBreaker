@@ -47,22 +47,17 @@ System.register(["cc"], function (_export, _context) {
           _initializerDefineProperty(this, "playButton", _descriptor, this);
         }
 
-        start() {//director.preloadScene('playScreen');
+        start() {
+          director.preloadScene('levelScreenNew');
         }
 
         onLoad() {
-          this.playButton.on(Node.EventType.TOUCH_START, this.moveScreen, this);
-          console.log('on load called');
-        }
-
-        moveScreen() {
-          console.log('clicked diff');
-          director.loadScene('playScreen');
+          this.playButton.on(Node.EventType.TOUCH_START, this.changeScreen, this);
         }
 
         changeScreen() {
           console.log('clicked');
-          director.loadScene('playScreen');
+          director.loadScene('levelScreenNew');
         }
 
       }, _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "playButton", [_dec2], {

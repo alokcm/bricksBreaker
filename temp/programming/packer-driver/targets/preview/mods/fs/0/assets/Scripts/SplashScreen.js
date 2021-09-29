@@ -63,22 +63,17 @@ System.register(["cc"], function (_export, _context) {
 
         var _proto = SplashScreen.prototype;
 
-        _proto.start = function start() {//director.preloadScene('playScreen');
+        _proto.start = function start() {
+          director.preloadScene('levelScreenNew');
         };
 
         _proto.onLoad = function onLoad() {
-          this.playButton.on(Node.EventType.TOUCH_START, this.moveScreen, this);
-          console.log('on load called');
-        };
-
-        _proto.moveScreen = function moveScreen() {
-          console.log('clicked diff');
-          director.loadScene('playScreen');
+          this.playButton.on(Node.EventType.TOUCH_START, this.changeScreen, this);
         };
 
         _proto.changeScreen = function changeScreen() {
           console.log('clicked');
-          director.loadScene('playScreen');
+          director.loadScene('levelScreenNew');
         };
 
         return SplashScreen;

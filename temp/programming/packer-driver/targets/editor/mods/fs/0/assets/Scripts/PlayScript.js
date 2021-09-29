@@ -1,7 +1,7 @@
-System.register(["cc"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _context) {
   "use strict";
 
-  var _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, UITransform, Vec2, Intersection2D, Label, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _temp, _crd, ccclass, property, BRICKS, PlayScript;
+  var _reporterNs, _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, UITransform, Vec2, Intersection2D, Label, director, SingletonClass, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _temp, _crd, ccclass, property, LevelManager, BRICKS, PlayScript;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -11,8 +11,14 @@ System.register(["cc"], function (_export, _context) {
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
+  function _reportPossibleCrUseOfSingletonClass(extras) {
+    _reporterNs.report("SingletonClass", "./SingletonClass", _context.meta, extras);
+  }
+
   return {
-    setters: [function (_cc) {
+    setters: [function (_unresolved_) {
+      _reporterNs = _unresolved_;
+    }, function (_cc) {
       _cclegacy = _cc.cclegacy;
       _decorator = _cc._decorator;
       Component = _cc.Component;
@@ -30,6 +36,9 @@ System.register(["cc"], function (_export, _context) {
       Vec2 = _cc.Vec2;
       Intersection2D = _cc.Intersection2D;
       Label = _cc.Label;
+      director = _cc.director;
+    }, function (_unresolved_2) {
+      SingletonClass = _unresolved_2.SingletonClass;
     }],
     execute: function () {
       _crd = true;
@@ -40,6 +49,9 @@ System.register(["cc"], function (_export, _context) {
         ccclass,
         property
       } = _decorator);
+      LevelManager = (_crd && SingletonClass === void 0 ? (_reportPossibleCrUseOfSingletonClass({
+        error: Error()
+      }), SingletonClass) : SingletonClass).getInstance();
       /**
        * Predefined variables
        * Name = PlayScript
@@ -49,7 +61,11 @@ System.register(["cc"], function (_export, _context) {
        * FileBasenameNoExtension = PlayScript
        * URL = db://assets/Scripts/PlayScript.ts
        * ManualUrl = https://docs.cocos.com/creator/3.3/manual/en/
+       * 
        * Math.floor(Math.random() * (max - min + 1)) + min;
+       * this.bg!.getComponent(UITransform)?.convertToNodeSpaceAR(pos);
+       * let level=sys.localStorage.getItem('current_level');
+       * sys.localStorage.setItem('current_level' , `${this.current_level}`);
        */
 
       (function (BRICKS) {
@@ -96,7 +112,7 @@ System.register(["cc"], function (_export, _context) {
 
           _defineProperty(this, "columns", null);
 
-          _defineProperty(this, "level", 1);
+          _defineProperty(this, "level", LevelManager.getLevel());
 
           _defineProperty(this, "ch", void 0);
 
@@ -127,12 +143,14 @@ System.register(["cc"], function (_export, _context) {
           _defineProperty(this, "arrayOfChances", []);
         }
 
+        onLoad() {
+          this.sliderSprite.on(Node.EventType.TOUCH_MOVE, this.moveSliderOnTouch, this);
+        }
+
         start() {
           this.posOfSlider = this.sliderSprite.getPosition();
           this.screenWidth = this.node.width;
           this.tileDetails = this.asset[this.level - 1].json["tileDetails"];
-          console.log(this.tileDetails);
-          console.log('row in the script  ' + this.asset[0].json["rows"] + ' columns : ' + this.asset[0].json["columns"]);
           let wallLeft = this.node.getChildByName('wallLeft');
           let wallRight = this.node.getChildByName('wallRight');
           let wallTop = this.node.getChildByName('wallTop');
@@ -140,9 +158,9 @@ System.register(["cc"], function (_export, _context) {
           wallRight.setScale(1, this.node.getComponent(UITransform).height / 1920);
           wallTop.setScale(this.screenWidth / 1080, 1);
           this.fetchScript(this.level);
-          this.ballInitialPosition = this.ball.getPosition();
           this.addBricks();
           this.scoreLabel = this.node.getChildByName('score');
+          this.ballInitialPosition = this.ball.getPosition();
         }
 
         onBeginContactTry(selfCollider, otherCollider, contact) {
@@ -251,10 +269,6 @@ System.register(["cc"], function (_export, _context) {
           this.sliderSprite.setPosition(new Vec3(current.x - this.screenWidth / 2, this.posOfSlider.y, 1));
         }
 
-        onLoad() {
-          this.sliderSprite.on(Node.EventType.TOUCH_MOVE, this.moveSliderOnTouch, this);
-        }
-
         update() {
           this.arrayOfRewards.forEach(element => {
             var _element$getComponent, _this$sliderSprite$ge;
@@ -293,12 +307,15 @@ System.register(["cc"], function (_export, _context) {
             this.addLevel = false;
             this.ballNode.removeFromParent();
             this.level++;
-            this.fetchScript(this.level);
-            this.addBricks();
 
             if (this.level == 3) {
               this.level = 1;
             }
+
+            LevelManager.setLevel(this.level);
+            LevelManager.setLevelPlayed(this.level);
+            /*this.fetchScript(this.level);
+            this.addBricks();*/
 
             for (let i = 1; i < this.arrayOfChances.length; i++) {
               let temp = this.arrayOfChances[i];
@@ -306,6 +323,7 @@ System.register(["cc"], function (_export, _context) {
             }
 
             this.arrayOfChances = [];
+            director.loadScene('levelScreenNew');
           }
         }
 

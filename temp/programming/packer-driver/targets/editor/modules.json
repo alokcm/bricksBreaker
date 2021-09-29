@@ -1,6 +1,6 @@
 {
   "cce:/internal/x/cc": {
-    "mTimestamp": 20737.622972998768,
+    "mTimestamp": 14139.271630000003,
     "chunkId": "quick-pack:/cce/internal/x/cc.js",
     "imports": [
       {
@@ -389,7 +389,7 @@
     ]
   },
   "cce:/internal/x/prerequisite-imports": {
-    "mTimestamp": 15165542.294579998,
+    "mTimestamp": 31168635.98682,
     "chunkId": "quick-pack:/cce/internal/x/prerequisite-imports.js",
     "imports": [
       {
@@ -421,7 +421,7 @@
         }
       },
       {
-        "value": "file:///Users/naushad/BricksBreaker/assets/Scripts/SplashScreen.ts",
+        "value": "file:///Users/naushad/BricksBreaker/assets/Scripts/SingletonClass.ts",
         "rewritten": "__unresolved_2",
         "loc": {
           "start": {
@@ -430,7 +430,35 @@
           },
           "end": {
             "line": 5,
-            "column": 268
+            "column": 270
+          }
+        }
+      },
+      {
+        "value": "file:///Users/naushad/BricksBreaker/assets/Scripts/SplashScreen.ts",
+        "rewritten": "__unresolved_3",
+        "loc": {
+          "start": {
+            "line": 5,
+            "column": 286
+          },
+          "end": {
+            "line": 5,
+            "column": 354
+          }
+        }
+      },
+      {
+        "value": "file:///Users/naushad/BricksBreaker/assets/Scripts/levelScreenNewScript.ts",
+        "rewritten": "__unresolved_4",
+        "loc": {
+          "start": {
+            "line": 5,
+            "column": 370
+          },
+          "end": {
+            "line": 5,
+            "column": 446
           }
         }
       }
@@ -449,12 +477,20 @@
       },
       {
         "isExternal": false,
+        "url": "file:///Users/naushad/BricksBreaker/assets/Scripts/SingletonClass.ts"
+      },
+      {
+        "isExternal": false,
         "url": "file:///Users/naushad/BricksBreaker/assets/Scripts/SplashScreen.ts"
+      },
+      {
+        "isExternal": false,
+        "url": "file:///Users/naushad/BricksBreaker/assets/Scripts/levelScreenNewScript.ts"
       }
     ]
   },
   "file:///Users/naushad/BricksBreaker/assets/Scripts/SplashScreen.ts": {
-    "mTimestamp": 1632735531187.3872,
+    "mTimestamp": 1632916091934.2688,
     "chunkId": "assets/Scripts/SplashScreen.js",
     "imports": [
       {
@@ -489,9 +525,13 @@
     ]
   },
   "file:///Users/naushad/BricksBreaker/assets/Scripts/PlayScript.ts": {
-    "mTimestamp": 1632826814313.9458,
+    "mTimestamp": 1632918528939.2954,
     "chunkId": "assets/Scripts/PlayScript.js",
     "imports": [
+      {
+        "value": "cce:/internal/code-quality/cr.mjs",
+        "rewritten": "__unresolved_0"
+      },
       {
         "value": "cc"
       },
@@ -500,11 +540,129 @@
         "loc": {
           "start": {
             "line": 2,
-            "column": 294
+            "column": 304
           },
           "end": {
             "line": 2,
-            "column": 298
+            "column": 308
+          }
+        }
+      },
+      {
+        "value": "./SingletonClass",
+        "rewritten": "__unresolved_1",
+        "loc": {
+          "start": {
+            "line": 3,
+            "column": 31
+          },
+          "end": {
+            "line": 3,
+            "column": 49
+          }
+        }
+      }
+    ],
+    "modLoMetadata": {
+      "type": "esm"
+    },
+    "resolvedImports": [
+      {
+        "isExternal": false,
+        "url": "cce:/internal/code-quality/cr.mjs"
+      },
+      {
+        "isExternal": false,
+        "url": "cce:/internal/x/cc"
+      },
+      {
+        "isExternal": false,
+        "url": "cce:/internal/x/cc"
+      },
+      {
+        "isExternal": false,
+        "url": "file:///Users/naushad/BricksBreaker/assets/Scripts/SingletonClass.ts"
+      }
+    ]
+  },
+  "file:///Users/naushad/BricksBreaker/assets/Scripts/LevelScreen.ts": {
+    "mTimestamp": 1632916460558.9893,
+    "chunkId": "assets/Scripts/LevelScreen.js",
+    "imports": [
+      {
+        "value": "cce:/internal/code-quality/cr.mjs",
+        "rewritten": "__unresolved_0"
+      },
+      {
+        "value": "cc"
+      },
+      {
+        "value": "cc",
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 107
+          },
+          "end": {
+            "line": 1,
+            "column": 111
+          }
+        }
+      },
+      {
+        "value": "./SingletonClass",
+        "rewritten": "__unresolved_1",
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 31
+          },
+          "end": {
+            "line": 2,
+            "column": 49
+          }
+        }
+      }
+    ],
+    "modLoMetadata": {
+      "type": "esm"
+    },
+    "resolvedImports": [
+      {
+        "isExternal": false,
+        "url": "cce:/internal/code-quality/cr.mjs"
+      },
+      {
+        "isExternal": false,
+        "url": "cce:/internal/x/cc"
+      },
+      {
+        "isExternal": false,
+        "url": "cce:/internal/x/cc"
+      },
+      {
+        "isExternal": false,
+        "url": "file:///Users/naushad/BricksBreaker/assets/Scripts/SingletonClass.ts"
+      }
+    ]
+  },
+  "file:///Users/naushad/BricksBreaker/assets/Scripts/SingletonClass.ts": {
+    "mTimestamp": 1632918998206.7246,
+    "chunkId": "assets/Scripts/SingletonClass.js",
+    "imports": [
+      {
+        "value": "cc"
+      },
+      {
+        "value": "cc",
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 20
+          },
+          "end": {
+            "line": 1,
+            "column": 24
           }
         }
       }
@@ -523,10 +681,23 @@
       }
     ]
   },
-  "file:///Users/naushad/BricksBreaker/assets/Scripts/LevelScreen.ts": {
-    "mTimestamp": 1632834496264.382,
-    "chunkId": "assets/Scripts/LevelScreen.js",
+  "cce:/internal/code-quality/cr.mjs": {
+    "mTimestamp": 1632889347998,
+    "chunkId": "quick-pack:/cce/internal/code-quality/cr.js",
+    "imports": [],
+    "modLoMetadata": {
+      "type": "esm"
+    },
+    "resolvedImports": []
+  },
+  "file:///Users/naushad/BricksBreaker/assets/Scripts/levelScreenNewScript.ts": {
+    "mTimestamp": 1632920516650.013,
+    "chunkId": "assets/Scripts/levelScreenNewScript.js",
     "imports": [
+      {
+        "value": "cce:/internal/code-quality/cr.mjs",
+        "rewritten": "__unresolved_0"
+      },
       {
         "value": "cc"
       },
@@ -535,11 +706,25 @@
         "loc": {
           "start": {
             "line": 2,
-            "column": 65
+            "column": 106
           },
           "end": {
             "line": 2,
-            "column": 69
+            "column": 110
+          }
+        }
+      },
+      {
+        "value": "./SingletonClass",
+        "rewritten": "__unresolved_1",
+        "loc": {
+          "start": {
+            "line": 3,
+            "column": 31
+          },
+          "end": {
+            "line": 3,
+            "column": 49
           }
         }
       }
@@ -550,11 +735,19 @@
     "resolvedImports": [
       {
         "isExternal": false,
+        "url": "cce:/internal/code-quality/cr.mjs"
+      },
+      {
+        "isExternal": false,
         "url": "cce:/internal/x/cc"
       },
       {
         "isExternal": false,
         "url": "cce:/internal/x/cc"
+      },
+      {
+        "isExternal": false,
+        "url": "file:///Users/naushad/BricksBreaker/assets/Scripts/SingletonClass.ts"
       }
     ]
   }

@@ -1,6 +1,10 @@
 
-import { _decorator, Component, Node, SpriteComponent, Sprite, Vec3, UIComponent, UIModelComponent, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, RigidBody, RigidBody2D, UITransform, rect, Vec2, Slider, Intersection2D, Label } from 'cc';
+import { _decorator, Component, Node, SpriteComponent, Sprite, Vec3, UIComponent, UIModelComponent, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, RigidBody, RigidBody2D, UITransform, rect, Vec2, Slider, Intersection2D, Label, director } from 'cc';
+import { SingletonClass } from './SingletonClass';
 const { ccclass, property } = _decorator;
+
+
+var LevelManager:SingletonClass = SingletonClass.getInstance();
 
 /**
  * Predefined variables
@@ -11,9 +15,13 @@ const { ccclass, property } = _decorator;
  * FileBasenameNoExtension = PlayScript
  * URL = db://assets/Scripts/PlayScript.ts
  * ManualUrl = https://docs.cocos.com/creator/3.3/manual/en/
+ * 
  * Math.floor(Math.random() * (max - min + 1)) + min;
+ * this.bg!.getComponent(UITransform)?.convertToNodeSpaceAR(pos);
+ * let level=sys.localStorage.getItem('current_level');
+ * sys.localStorage.setItem('current_level' , `${this.current_level}`);
  */
- 
+
 enum BRICKS
 {
     IN_TWO_COLLISION = 1,
@@ -23,6 +31,8 @@ enum BRICKS
 
 @ccclass('PlayScript')
 export class PlayScript extends Component {
+
+
 
     @property(Node)
     sliderSprite : Node = null;
@@ -61,7 +71,7 @@ export class PlayScript extends Component {
     ballInitialPosition : any;
     rows : number = null;
     columns : number = null;
-    level : number = 1;
+    level : number = LevelManager.getLevel();
     ch : any;
     startXPos : number = null;
     startYPos : number = null;
@@ -78,14 +88,17 @@ export class PlayScript extends Component {
     arrayOfChances : any[] = [];
 
 
+
+    onLoad()
+    {
+        this.sliderSprite.on(Node.EventType.TOUCH_MOVE,this.moveSliderOnTouch,this);
+    }
+
     start () {
         this.posOfSlider = this.sliderSprite.getPosition();
         this.screenWidth = this.node.width;
         this.tileDetails = this.asset[this.level-1].json["tileDetails"];
-        console.log(this.tileDetails);
-        console.log('row in the script  ' + this.asset[0].json["rows"] + ' columns : ' + this.asset[0].json["columns"]);
         
-
         let wallLeft = this.node.getChildByName('wallLeft');
         let wallRight = this.node.getChildByName('wallRight');
         let wallTop = this.node.getChildByName('wallTop');
@@ -94,9 +107,10 @@ export class PlayScript extends Component {
         wallTop.setScale(this.screenWidth/1080,1);
 
         this.fetchScript(this.level);
-        this.ballInitialPosition = this.ball.getPosition();
         this.addBricks();
+
         this.scoreLabel = this.node.getChildByName('score');
+        this.ballInitialPosition = this.ball.getPosition();
     }
 
     onBeginContactTry(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)
@@ -120,7 +134,6 @@ export class PlayScript extends Component {
         this.scaleFactor = this.bricksWidthTemp/this.bricksPrefab.data.width;
         this.bricksPrefab.data.setScale(this.scaleFactor,this.scaleFactor);
         console.log(this.ballInitialPosition);
-        
         let balltemp = instantiate(this.ballPrefab);
         this.node.addChild(balltemp);
         this.ballNode = balltemp;
@@ -217,10 +230,7 @@ export class PlayScript extends Component {
         this.sliderSprite.setPosition(new Vec3(current.x-this.screenWidth/2,this.posOfSlider.y,1));
     }
 
-    onLoad()
-    {
-        this.sliderSprite.on(Node.EventType.TOUCH_MOVE,this.moveSliderOnTouch,this);
-    }
+    
 
     update()
     {
@@ -267,19 +277,23 @@ export class PlayScript extends Component {
         {
             this.addLevel = false;
             this.ballNode.removeFromParent();
+
             this.level++;
-            this.fetchScript(this.level);
-            this.addBricks();
             if(this.level == 3)
             {
                 this.level = 1;
             }
+            LevelManager.setLevel(this.level);
+            LevelManager.setLevelPlayed(this.level);
+            /*this.fetchScript(this.level);
+            this.addBricks();*/
             for(let i = 1;i<this.arrayOfChances.length;i++)
             {
                 let temp = this.arrayOfChances[i];
                 temp.removeFromParent();
             }
             this.arrayOfChances = [];
+            director.loadScene('levelScreenNew');
         }
     }
 

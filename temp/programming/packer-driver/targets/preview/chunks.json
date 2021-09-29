@@ -1,11 +1,4 @@
 {
-  "assets/Scripts/SplashScreen.js": {
-    "imports": {
-      "cc": "quick-pack:/cce/internal/x/cc.js"
-    },
-    "physicalLocation": "fs/0/assets/Scripts/SplashScreen.js",
-    "mTimestamp": 1632740029417
-  },
   "quick-pack:/cce/internal/x/cc.js": {
     "imports": {
       "__unresolved_0": {
@@ -74,33 +67,67 @@
       }
     },
     "physicalLocation": "cce/internal/x/cc.js",
-    "mTimestamp": 1632819385525,
+    "mTimestamp": 1632889387012,
     "isEntry": true,
     "exposeAs": "cce:/internal/x/cc"
   },
-  "assets/Scripts/PlayScript.js": {
+  "quick-pack:/cce/internal/code-quality/cr.js": {
+    "imports": {},
+    "physicalLocation": "cce/internal/code-quality/cr.js",
+    "mTimestamp": 1632895113710
+  },
+  "assets/Scripts/SplashScreen.js": {
     "imports": {
       "cc": "quick-pack:/cce/internal/x/cc.js"
     },
-    "physicalLocation": "fs/0/assets/Scripts/PlayScript.js",
-    "mTimestamp": 1632826816870
-  },
-  "quick-pack:/cce/internal/x/prerequisite-imports.js": {
-    "imports": {
-      "__unresolved_1": "assets/Scripts/PlayScript.js",
-      "__unresolved_2": "assets/Scripts/SplashScreen.js",
-      "__unresolved_0": "assets/Scripts/LevelScreen.js"
-    },
-    "physicalLocation": "cce/internal/x/prerequisite-imports.js",
-    "mTimestamp": 1632834499494,
-    "isEntry": true,
-    "exposeAs": "cce:/internal/x/prerequisite-imports"
+    "physicalLocation": "fs/0/assets/Scripts/SplashScreen.js",
+    "mTimestamp": 1632916358952
   },
   "assets/Scripts/LevelScreen.js": {
     "imports": {
-      "cc": "quick-pack:/cce/internal/x/cc.js"
+      "cc": "quick-pack:/cce/internal/x/cc.js",
+      "__unresolved_0": "quick-pack:/cce/internal/code-quality/cr.js",
+      "__unresolved_1": "assets/Scripts/SingletonClass.js"
     },
     "physicalLocation": "fs/0/assets/Scripts/LevelScreen.js",
-    "mTimestamp": 1632834499675
+    "mTimestamp": 1632916668644
+  },
+  "assets/Scripts/PlayScript.js": {
+    "imports": {
+      "__unresolved_0": "quick-pack:/cce/internal/code-quality/cr.js",
+      "cc": "quick-pack:/cce/internal/x/cc.js",
+      "__unresolved_1": "assets/Scripts/SingletonClass.js"
+    },
+    "physicalLocation": "fs/0/assets/Scripts/PlayScript.js",
+    "mTimestamp": 1632918570749
+  },
+  "assets/Scripts/SingletonClass.js": {
+    "imports": {
+      "cc": "quick-pack:/cce/internal/x/cc.js"
+    },
+    "physicalLocation": "fs/0/assets/Scripts/SingletonClass.js",
+    "mTimestamp": 1632919007131
+  },
+  "quick-pack:/cce/internal/x/prerequisite-imports.js": {
+    "imports": {
+      "__unresolved_0": "assets/Scripts/LevelScreen.js",
+      "__unresolved_1": "assets/Scripts/PlayScript.js",
+      "__unresolved_2": "assets/Scripts/SingletonClass.js",
+      "__unresolved_3": "assets/Scripts/SplashScreen.js",
+      "__unresolved_4": "assets/Scripts/levelScreenNewScript.js"
+    },
+    "physicalLocation": "cce/internal/x/prerequisite-imports.js",
+    "mTimestamp": 1632920518100,
+    "isEntry": true,
+    "exposeAs": "cce:/internal/x/prerequisite-imports"
+  },
+  "assets/Scripts/levelScreenNewScript.js": {
+    "imports": {
+      "cc": "quick-pack:/cce/internal/x/cc.js",
+      "__unresolved_0": "quick-pack:/cce/internal/code-quality/cr.js",
+      "__unresolved_1": "assets/Scripts/SingletonClass.js"
+    },
+    "physicalLocation": "fs/0/assets/Scripts/levelScreenNewScript.js",
+    "mTimestamp": 1632920518303
   }
 }

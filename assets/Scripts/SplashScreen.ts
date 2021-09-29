@@ -18,31 +18,21 @@ const { ccclass, property } = _decorator;
 @ccclass('SplashScreen')
 export class SplashScreen extends Component {
 
-
-    
-
     @property(Node)
     playButton : Node = null;
 
     start () {
-        //director.preloadScene('playScreen');
+        director.preloadScene('levelScreenNew');
     }
 
     onLoad()
     {
-        this.playButton.on(Node.EventType.TOUCH_START,this.moveScreen,this);
-        console.log('on load called');
+        this.playButton.on(Node.EventType.TOUCH_START,this.changeScreen,this);
     }
 
-
-    moveScreen()
-    {
-        console.log('clicked diff');
-        director.loadScene('playScreen');
-    }
     changeScreen()
     {
         console.log('clicked');
-        director.loadScene('playScreen');
+        director.loadScene('levelScreenNew');
     }
 }
