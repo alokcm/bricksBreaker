@@ -4,6 +4,11 @@
     "cce:/internal/x/prerequisite-imports": "./mods/cce/internal/x/prerequisite-imports.js"
   },
   "scopes": {
+    "./mods/fs/0/assets/Scripts/LevelScreen.js": {
+      "cc": "./mods/cce/internal/x/cc.js",
+      "__unresolved_1": "./mods/fs/0/assets/Scripts/SingletonClass.js",
+      "__unresolved_0": "./mods/cce/internal/code-quality/cr.js"
+    },
     "./mods/cce/internal/x/cc.js": {
       "__unresolved_0": "cce:/internal/x/cc-fu/base",
       "__unresolved_1": "cce:/internal/x/cc-fu/gfx-webgl",
@@ -30,30 +35,25 @@
     "./mods/fs/0/assets/Scripts/SplashScreen.js": {
       "cc": "./mods/cce/internal/x/cc.js"
     },
-    "./mods/fs/0/assets/Scripts/LevelScreen.js": {
+    "./mods/fs/0/assets/Scripts/levelScreenNewScript.js": {
       "cc": "./mods/cce/internal/x/cc.js",
       "__unresolved_0": "./mods/cce/internal/code-quality/cr.js",
       "__unresolved_1": "./mods/fs/0/assets/Scripts/SingletonClass.js"
     },
     "./mods/fs/0/assets/Scripts/PlayScript.js": {
-      "__unresolved_0": "./mods/cce/internal/code-quality/cr.js",
       "cc": "./mods/cce/internal/x/cc.js",
+      "__unresolved_0": "./mods/cce/internal/code-quality/cr.js",
       "__unresolved_1": "./mods/fs/0/assets/Scripts/SingletonClass.js"
-    },
-    "./mods/fs/0/assets/Scripts/SingletonClass.js": {
-      "cc": "./mods/cce/internal/x/cc.js"
     },
     "./mods/cce/internal/x/prerequisite-imports.js": {
       "__unresolved_0": "./mods/fs/0/assets/Scripts/LevelScreen.js",
       "__unresolved_1": "./mods/fs/0/assets/Scripts/PlayScript.js",
       "__unresolved_3": "./mods/fs/0/assets/Scripts/SplashScreen.js",
-      "__unresolved_2": "./mods/fs/0/assets/Scripts/SingletonClass.js",
-      "__unresolved_4": "./mods/fs/0/assets/Scripts/levelScreenNewScript.js"
+      "__unresolved_4": "./mods/fs/0/assets/Scripts/levelScreenNewScript.js",
+      "__unresolved_2": "./mods/fs/0/assets/Scripts/SingletonClass.js"
     },
-    "./mods/fs/0/assets/Scripts/levelScreenNewScript.js": {
-      "cc": "./mods/cce/internal/x/cc.js",
-      "__unresolved_0": "./mods/cce/internal/code-quality/cr.js",
-      "__unresolved_1": "./mods/fs/0/assets/Scripts/SingletonClass.js"
+    "./mods/fs/0/assets/Scripts/SingletonClass.js": {
+      "cc": "./mods/cce/internal/x/cc.js"
     }
   }
 }

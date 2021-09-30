@@ -21,9 +21,13 @@ System.register(["cc"], function (_export, _context) {
         constructor() {
           _defineProperty(this, "_score", 0);
 
-          _defineProperty(this, "_level", 1);
+          _defineProperty(this, "_currLevel", 1);
 
           _defineProperty(this, "_levelsPlayed", 1);
+
+          _defineProperty(this, "_eachlevelHighScore", [0, 0, 0, 0, 0, 0]);
+
+          _defineProperty(this, "_eachlevelStar", [1, 1, 1, 1, 1, 1]);
 
           if (SingletonClass._instance) {
             throw new Error("Error: Instantiation failed: Use SingletonDemo.getInstance() instead of new.");
@@ -48,16 +52,20 @@ System.register(["cc"], function (_export, _context) {
           this._score += value;
         }
 
-        removePoints(value) {
-          this._score -= value;
-        }
-
         setLevel(value) {
-          this._level = value;
+          this._currLevel = value;
         }
 
         getLevel() {
-          return this._level;
+          return this._currLevel;
+        }
+
+        increaseLevel() {
+          this._currLevel++;
+
+          if (this._currLevel >= this._levelsPlayed) {
+            this._levelsPlayed = this._currLevel;
+          }
         }
 
         setLevelPlayed(value) {
@@ -68,6 +76,14 @@ System.register(["cc"], function (_export, _context) {
         getLevelPlayed() {
           let level = Number.parseInt(sys.localStorage.getItem('level_played'));
           return level;
+        }
+
+        setLevelHighScore(level, highScore) {
+          this._eachlevelHighScore[level - 1] = highScore;
+        }
+
+        getLevelHighScore(level) {
+          return this._eachlevelHighScore[level - 1];
         }
 
       });

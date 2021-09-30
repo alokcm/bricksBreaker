@@ -11,6 +11,15 @@
       {
         "url": "db://assets/playScreen.scene",
         "uuid": "bf766d2c-e1b4-4683-b22c-e192251a477d"
+      },
+      {
+        "url": "db://assets/mainScreen.scene",
+        "uuid": "3882d90d-da09-4a66-af43-a5646137deaf",
+        "inBundle": false
+      },
+      {
+        "url": "db://assets/levelScreenNew.scene",
+        "uuid": "275ba2b6-9827-4ec5-adf7-4c5488c5cf04"
       }
     ],
     "startScene": "3882d90d-da09-4a66-af43-a5646137deaf"
@@ -21,7 +30,7 @@
         "id": "1632289708711",
         "progress": 1,
         "state": "success",
-        "message": "27-09-2021 19:53 Build success in 21426 ms!",
+        "message": "30-09-2021 16:06 Build success in 280878 ms!",
         "options": {
           "name": "BricksBreaker",
           "platform": "web-mobile",
@@ -46,6 +55,10 @@
               "url": "db://assets/mainScreen.scene",
               "uuid": "3882d90d-da09-4a66-af43-a5646137deaf",
               "inBundle": false
+            },
+            {
+              "url": "db://assets/levelScreenNew.scene",
+              "uuid": "275ba2b6-9827-4ec5-adf7-4c5488c5cf04"
             }
           ],
           "outputName": "web-mobile",
@@ -62,7 +75,7 @@
             }
           }
         },
-        "time": "27-09-2021 19:53",
+        "time": "30-09-2021 16:01",
         "dirty": false
       }
     }

@@ -1507,6 +1507,10 @@
     "content": {
       "__id__": 37
     },
+    "yellowStar": {
+      "__uuid__": "59e63396-9bea-4d37-881f-f5a7bbc4037a@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_id": "abt4KHgn9DwKvMbaqCz2lM"
   },
   {

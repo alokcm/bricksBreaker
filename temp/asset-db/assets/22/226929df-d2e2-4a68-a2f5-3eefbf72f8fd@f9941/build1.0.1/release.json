@@ -1,0 +1,53 @@
+[
+    1,
+    [
+        "22aSnf0uJKaKL1Pu+/cvj9@6c48a"
+    ],
+    [
+        "_textureSource"
+    ],
+    [
+        "cc.SpriteFrame"
+    ],
+    0,
+    [
+        {
+            "name": "goldStar",
+            "rect": {
+                "x": 71,
+                "y": 67,
+                "width": 7858,
+                "height": 7482
+            },
+            "offset": {
+                "x": 0,
+                "y": 0
+            },
+            "originalSize": {
+                "width": 8000,
+                "height": 7616
+            },
+            "rotated": false,
+            "capInsets": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "packable": true
+        }
+    ],
+    [
+        0
+    ],
+    0,
+    [
+        0
+    ],
+    [
+        0
+    ],
+    [
+        0
+    ]
+]

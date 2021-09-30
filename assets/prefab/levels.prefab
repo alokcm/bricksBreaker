@@ -305,7 +305,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "59e63396-9bea-4d37-881f-f5a7bbc4037a@f9941",
+      "__uuid__": "226929df-d2e2-4a68-a2f5-3eefbf72f8fd@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -435,7 +435,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "59e63396-9bea-4d37-881f-f5a7bbc4037a@f9941",
+      "__uuid__": "226929df-d2e2-4a68-a2f5-3eefbf72f8fd@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -855,26 +855,26 @@
     },
     "clickEvents": [],
     "_interactable": true,
-    "_transition": 0,
+    "_transition": 1,
     "_normalColor": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 99,
+      "g": 194,
+      "b": 152,
       "a": 255
     },
     "_hoverColor": {
       "__type__": "cc.Color",
-      "r": 211,
-      "g": 211,
-      "b": 211,
+      "r": 255,
+      "g": 248,
+      "b": 77,
       "a": 255
     },
     "_pressedColor": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 27,
+      "g": 95,
+      "b": 65,
       "a": 255
     },
     "_disabledColor": {

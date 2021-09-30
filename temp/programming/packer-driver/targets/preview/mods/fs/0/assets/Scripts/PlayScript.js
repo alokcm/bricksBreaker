@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, UITransform, Vec2, Intersection2D, Label, director, SingletonClass, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _temp, _crd, ccclass, property, LevelManager, BRICKS, PlayScript;
+  var _reporterNs, _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, UITransform, Vec2, Intersection2D, Label, director, Button, SingletonClass, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _temp, _crd, ccclass, property, LevelManager, BRICKS, PlayScript;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -43,6 +43,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
       Intersection2D = _cc.Intersection2D;
       Label = _cc.Label;
       director = _cc.director;
+      Button = _cc.Button;
     }, function (_unresolved_2) {
       SingletonClass = _unresolved_2.SingletonClass;
     }],
@@ -78,7 +79,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
         BRICKS[BRICKS["HAS_REWARDS"] = 3] = "HAS_REWARDS";
       })(BRICKS || (BRICKS = {}));
 
-      _export("PlayScript", PlayScript = (_dec = ccclass('PlayScript'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(SpriteFrame), _dec5 = property(SpriteFrame), _dec6 = property(JsonAsset), _dec7 = property(SpriteFrame), _dec8 = property(Prefab), _dec9 = property(Prefab), _dec10 = property(Prefab), _dec11 = property(Prefab), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
+      _export("PlayScript", PlayScript = (_dec = ccclass('PlayScript'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(SpriteFrame), _dec5 = property(SpriteFrame), _dec6 = property(JsonAsset), _dec7 = property(SpriteFrame), _dec8 = property(Prefab), _dec9 = property(Prefab), _dec10 = property(Prefab), _dec11 = property(Prefab), _dec12 = property(Node), _dec13 = property(Node), _dec14 = property(Button), _dec15 = property(Button), _dec16 = property(Button), _dec17 = property(Button), _dec18 = property(Button), _dec19 = property(Label), _dec20 = property(Label), _dec21 = property(Label), _dec22 = property(Label), _dec23 = property(SpriteFrame), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
         _inheritsLoose(PlayScript, _Component);
 
         function PlayScript() {
@@ -109,6 +110,30 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           _initializerDefineProperty(_assertThisInitialized(_this), "ballPrefab", _descriptor9, _assertThisInitialized(_this));
 
           _initializerDefineProperty(_assertThisInitialized(_this), "ballForChances", _descriptor10, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "gameOverPopUp", _descriptor11, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "levelEndPopUp", _descriptor12, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "gameOverHome", _descriptor13, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "gameOverRestart", _descriptor14, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "levelEndHome", _descriptor15, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "levelEndRestart", _descriptor16, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "levelEndNext", _descriptor17, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "gameOverScore", _descriptor18, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "gameOverHighScore", _descriptor19, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "LevelEndScore", _descriptor20, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "LevelEndHighScore", _descriptor21, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "yellowStar", _descriptor22, _assertThisInitialized(_this));
 
           _defineProperty(_assertThisInitialized(_this), "posOfSlider", null);
 
@@ -154,6 +179,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           _defineProperty(_assertThisInitialized(_this), "arrayOfChances", []);
 
+          _defineProperty(_assertThisInitialized(_this), "timer", 0);
+
+          _defineProperty(_assertThisInitialized(_this), "intervalID", null);
+
           return _this;
         }
 
@@ -177,10 +206,77 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this.addBricks();
           this.scoreLabel = this.node.getChildByName('score');
           this.ballInitialPosition = this.ball.getPosition();
+          this.gameOverPopUp.active = false;
+          this.levelEndPopUp.active = false;
+          this.gameOverHome.node.on(Node.EventType.TOUCH_END, this.moveToHome, this);
+          this.levelEndHome.node.on(Node.EventType.TOUCH_END, this.moveToHome, this);
+          this.gameOverRestart.node.on(Node.EventType.TOUCH_END, this.restartTheSameLevel, this);
+          this.levelEndRestart.node.on(Node.EventType.TOUCH_END, this.restartTheSameLevel, this);
+          this.levelEndNext.node.on(Node.EventType.TOUCH_END, this.loadNextLevel, this);
+          console.log('start called in playScript');
+          LevelManager.setScore(0);
+          this.score = 0;
+        };
+
+        _proto.resetChances = function resetChances() {
+          for (var i = 0; i < this.arrayOfChances.length; i++) {
+            var p = this.arrayOfChances.pop();
+            p.removeFromParent();
+          }
+
+          this.arrayOfChances = [];
+          this.score = 0;
+        };
+
+        _proto.moveToHome = function moveToHome(event) {
+          director.loadScene('levelScreenNew');
+        };
+
+        _proto.restartTheSameLevel = function restartTheSameLevel(event) {
+          var _this2 = this;
+
+          this.resetChances();
+          this.arrayOfBricksOnScreen.forEach(function (element) {
+            element.removeFromParent();
+          });
+          this.arrayOfBricksOnScreen = [];
+          this.fetchScript(LevelManager.getLevel());
+          this.addBricks();
+          setTimeout(function () {
+            _this2.gameOverPopUp.active = false;
+            _this2.levelEndPopUp.active = false;
+          }, 100);
+        };
+
+        _proto.loadNextLevel = function loadNextLevel() {
+          var _this3 = this;
+
+          LevelManager.increaseLevel();
+          this.resetChances();
+          this.fetchScript(LevelManager.getLevel());
+          this.addBricks();
+          setTimeout(function () {
+            _this3.gameOverPopUp.active = false;
+            _this3.levelEndPopUp.active = false;
+          }, 100);
         };
 
         _proto.onBeginContactTry = function onBeginContactTry(selfCollider, otherCollider, contact) {
           console.log(otherCollider);
+        };
+
+        _proto.showGameOverPopUp = function showGameOverPopUp() {
+          this.gameOverScore.getComponent(Label).string = "" + LevelManager.getScore();
+          this.gameOverHighScore.getComponent(Label).string = "" + LevelManager.getScore();
+          this.gameOverPopUp.active = true;
+          clearInterval(this.intervalID);
+        };
+
+        _proto.showlevelEndPopUp = function showlevelEndPopUp() {
+          this.LevelEndScore.getComponent(Label).string = "" + LevelManager.getScore();
+          this.LevelEndHighScore.getComponent(Label).string = "" + LevelManager.getScore();
+          this.levelEndPopUp.active = true;
+          clearInterval(this.intervalID);
         };
 
         _proto.fetchScript = function fetchScript(lev) {
@@ -206,11 +302,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           if (this.collider) {
             this.collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this); //this.collider.on(Contact2DType.END_CONTACT,this.onEndContact,this);
-          }
+          } //this.scoreLabel.getComponent(Label).string = `score : ${LevelManager.getScore()}`;
+
         };
 
         _proto.addChances = function addChances() {
-          console.log('addchances called');
           var x = -(this.screenWidth / 2);
           var y = -(this.node.getComponent(UITransform).height / 2);
           x += 38;
@@ -224,6 +320,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             this.arrayOfChances.push(b);
             x += 76;
           }
+
+          console.log('addchances called');
         };
 
         _proto.onEndContact = function onEndContact(selfCollider, otherCollider, contact) {
@@ -286,40 +384,51 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
         };
 
         _proto.update = function update() {
-          var _this2 = this;
+          var _this4 = this;
 
           this.arrayOfRewards.forEach(function (element) {
-            var _element$getComponent, _this2$sliderSprite$g;
+            var _element$getComponent, _this4$sliderSprite$g;
 
             element.setPosition(element.getPosition().x, element.getPosition().y - 10, 1);
 
-            if (Intersection2D.rectRect((_element$getComponent = element.getComponent(UITransform)) === null || _element$getComponent === void 0 ? void 0 : _element$getComponent.getBoundingBoxToWorld(), (_this2$sliderSprite$g = _this2.sliderSprite.getComponent(UITransform)) === null || _this2$sliderSprite$g === void 0 ? void 0 : _this2$sliderSprite$g.getBoundingBoxToWorld())) {
+            if (Intersection2D.rectRect((_element$getComponent = element.getComponent(UITransform)) === null || _element$getComponent === void 0 ? void 0 : _element$getComponent.getBoundingBoxToWorld(), (_this4$sliderSprite$g = _this4.sliderSprite.getComponent(UITransform)) === null || _this4$sliderSprite$g === void 0 ? void 0 : _this4$sliderSprite$g.getBoundingBoxToWorld())) {
               console.log('collided rewards and slider');
 
-              var removeReward = _this2.arrayOfRewards.shift();
+              var removeReward = _this4.arrayOfRewards.shift();
 
               removeReward.getComponent(Sprite).destroy();
               removeReward.destroy();
-              console.log(_this2.arrayOfRewards);
-              _this2.score += 10;
-              _this2.scoreLabel.getComponent(Label).string = "score : " + _this2.score;
+              console.log(_this4.arrayOfRewards);
+              _this4.score += 10;
+              _this4.scoreLabel.getComponent(Label).string = "score : " + _this4.score;
             }
           });
 
           if (this.ballNode.getPosition().y < -this.node.getComponent(UITransform).height) {
             console.log('ball is out of the screen');
             this.maxNumberOfBall--;
+            console.log('chances left : ' + this.maxNumberOfBall);
 
             if (this.maxNumberOfBall >= 1) {
               this.ballNode.setPosition(this.ballInitialPosition);
-              this.ballNode.getComponent(RigidBody2D).linearVelocity = new Vec2(0, 0); // let newBall = instantiate(this.ballPrefab);
-              // this.node.addChild(newBall);
-              // this.ball = newBall;
-
+              this.ballNode.getComponent(RigidBody2D).linearVelocity = new Vec2(0, 0);
+              this.ballNode.getComponent(RigidBody2D).angularVelocity = 0;
               var tempball = this.arrayOfChances.pop();
               tempball.removeFromParent();
+              console.log('one ball removed ');
             } else {
               this.ballNode.removeFromParent();
+              LevelManager.setScore(this.score);
+              this.showGameOverPopUp();
+              console.log(this.gameOverPopUp.getSiblingIndex());
+
+              for (var i = 0; i < this.arrayOfChances.length; i++) {
+                var p = this.arrayOfChances.pop();
+                p.removeFromParent();
+              }
+
+              this.arrayOfChances = [];
+              console.log('game is over now ');
             }
           }
 
@@ -328,26 +437,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             this.ballNode.removeFromParent();
             this.level++;
 
-            if (this.level == 3) {
+            if (this.level == 7) {
               this.level = 1;
             }
 
-            LevelManager.setLevel(this.level);
             LevelManager.setLevelPlayed(this.level);
-            /*this.fetchScript(this.level);
-            this.addBricks();*/
-
-            for (var i = 1; i < this.arrayOfChances.length; i++) {
-              var temp = this.arrayOfChances[i];
-              temp.removeFromParent();
-            }
-
-            this.arrayOfChances = [];
-            director.loadScene('levelScreenNew');
+            LevelManager.setScore(this.score);
+            LevelManager.setScore(this.score);
+            clearInterval(this.intervalID);
+            this.showlevelEndPopUp();
           }
         };
 
         _proto.addBricks = function addBricks() {
+          var _this5 = this;
+
           for (var i = 0; i < this.tileDetails.length; i++) {
             var type = this.tileDetails[i]["type"];
             console.log(type);
@@ -381,6 +485,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
                 console.log('No details for this bricks.');
             }
           }
+
+          console.log('last prefab : ' + this.ch.getSiblingIndex());
+          this.gameOverPopUp.setSiblingIndex(this.ch.getSiblingIndex() + 5);
+          this.intervalID = setInterval(function () {
+            _this5.timer++;
+            console.log(_this5.timer);
+          }, 1000);
         };
 
         return PlayScript;
@@ -448,6 +559,90 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           return null;
         }
       }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "ballForChances", [_dec11], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "gameOverPopUp", [_dec12], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor12 = _applyDecoratedDescriptor(_class2.prototype, "levelEndPopUp", [_dec13], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor13 = _applyDecoratedDescriptor(_class2.prototype, "gameOverHome", [_dec14], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor14 = _applyDecoratedDescriptor(_class2.prototype, "gameOverRestart", [_dec15], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor15 = _applyDecoratedDescriptor(_class2.prototype, "levelEndHome", [_dec16], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor16 = _applyDecoratedDescriptor(_class2.prototype, "levelEndRestart", [_dec17], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor17 = _applyDecoratedDescriptor(_class2.prototype, "levelEndNext", [_dec18], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor18 = _applyDecoratedDescriptor(_class2.prototype, "gameOverScore", [_dec19], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor19 = _applyDecoratedDescriptor(_class2.prototype, "gameOverHighScore", [_dec20], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor20 = _applyDecoratedDescriptor(_class2.prototype, "LevelEndScore", [_dec21], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor21 = _applyDecoratedDescriptor(_class2.prototype, "LevelEndHighScore", [_dec22], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor22 = _applyDecoratedDescriptor(_class2.prototype, "yellowStar", [_dec23], {
         configurable: true,
         enumerable: true,
         writable: true,

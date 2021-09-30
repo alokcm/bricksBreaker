@@ -19,9 +19,13 @@ System.register(["cc"], function (_export, _context) {
         function SingletonClass() {
           _defineProperty(this, "_score", 0);
 
-          _defineProperty(this, "_level", 1);
+          _defineProperty(this, "_currLevel", 1);
 
           _defineProperty(this, "_levelsPlayed", 1);
+
+          _defineProperty(this, "_eachlevelHighScore", [0, 0, 0, 0, 0, 0]);
+
+          _defineProperty(this, "_eachlevelStar", [1, 1, 1, 1, 1, 1]);
 
           if (SingletonClass._instance) {
             throw new Error("Error: Instantiation failed: Use SingletonDemo.getInstance() instead of new.");
@@ -48,16 +52,20 @@ System.register(["cc"], function (_export, _context) {
           this._score += value;
         };
 
-        _proto.removePoints = function removePoints(value) {
-          this._score -= value;
-        };
-
         _proto.setLevel = function setLevel(value) {
-          this._level = value;
+          this._currLevel = value;
         };
 
         _proto.getLevel = function getLevel() {
-          return this._level;
+          return this._currLevel;
+        };
+
+        _proto.increaseLevel = function increaseLevel() {
+          this._currLevel++;
+
+          if (this._currLevel >= this._levelsPlayed) {
+            this._levelsPlayed = this._currLevel;
+          }
         };
 
         _proto.setLevelPlayed = function setLevelPlayed(value) {
@@ -68,6 +76,14 @@ System.register(["cc"], function (_export, _context) {
         _proto.getLevelPlayed = function getLevelPlayed() {
           var level = Number.parseInt(sys.localStorage.getItem('level_played'));
           return level;
+        };
+
+        _proto.setLevelHighScore = function setLevelHighScore(level, highScore) {
+          this._eachlevelHighScore[level - 1] = highScore;
+        };
+
+        _proto.getLevelHighScore = function getLevelHighScore(level) {
+          return this._eachlevelHighScore[level - 1];
         };
 
         return SingletonClass;

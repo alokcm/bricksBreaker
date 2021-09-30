@@ -1,0 +1,53 @@
+[
+    1,
+    [
+        "04MMJtnRFKSqSFYdB2EB8Q@6c48a"
+    ],
+    [
+        "_textureSource"
+    ],
+    [
+        "cc.SpriteFrame"
+    ],
+    0,
+    [
+        {
+            "name": "popUp",
+            "rect": {
+                "x": 284,
+                "y": 308,
+                "width": 714,
+                "height": 693
+            },
+            "offset": {
+                "x": 1,
+                "y": -14.5
+            },
+            "originalSize": {
+                "width": 1280,
+                "height": 1280
+            },
+            "rotated": false,
+            "capInsets": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "packable": true
+        }
+    ],
+    [
+        0
+    ],
+    0,
+    [
+        0
+    ],
+    [
+        0
+    ],
+    [
+        0
+    ]
+]

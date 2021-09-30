@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, SpriteComponent, Sprite, Vec3, UIComponent, UIModelComponent, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, RigidBody, RigidBody2D, UITransform, rect, Vec2, Slider, Intersection2D, Label, director } from 'cc';
+import { _decorator, Component, Node, SpriteComponent, Sprite, Vec3, UIComponent, UIModelComponent, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, RigidBody, RigidBody2D, UITransform, rect, Vec2, Slider, Intersection2D, Label, director, Button } from 'cc';
 import { SingletonClass } from './SingletonClass';
 const { ccclass, property } = _decorator;
 
@@ -64,6 +64,42 @@ export class PlayScript extends Component {
     @property(Prefab)
     ballForChances : Prefab = null;
 
+    @property(Node)
+    gameOverPopUp : Node = null;
+
+    @property(Node)
+    levelEndPopUp : Node = null;
+
+    @property(Button)
+    gameOverHome : Button = null;
+
+    @property(Button)
+    gameOverRestart : Button = null;
+
+    @property(Button)
+    levelEndHome : Button = null;
+
+    @property(Button)
+    levelEndRestart : Button = null;
+
+    @property(Button)
+    levelEndNext : Button = null;
+
+    @property(Label)
+    gameOverScore : Label = null;
+
+    @property(Label)
+    gameOverHighScore : Label = null;
+
+    @property(Label)
+    LevelEndScore : Label = null;
+
+    @property(Label)
+    LevelEndHighScore : Label = null;
+
+    @property(SpriteFrame)
+    yellowStar : SpriteFrame = null;
+
     posOfSlider : Vec3 = null;
     screenWidth : any;
     tileDetails: string[] = [];
@@ -86,8 +122,8 @@ export class PlayScript extends Component {
     scoreLabel : any = null;
     score : number = 0;
     arrayOfChances : any[] = [];
-
-
+    timer : number = 0;
+    intervalID : any = null;
 
     onLoad()
     {
@@ -111,11 +147,83 @@ export class PlayScript extends Component {
 
         this.scoreLabel = this.node.getChildByName('score');
         this.ballInitialPosition = this.ball.getPosition();
+
+        this.gameOverPopUp.active = false;
+        this.levelEndPopUp.active = false;
+        
+        this.gameOverHome.node.on(Node.EventType.TOUCH_END,this.moveToHome,this);
+        this.levelEndHome.node.on(Node.EventType.TOUCH_END,this.moveToHome,this);
+        this.gameOverRestart.node.on(Node.EventType.TOUCH_END,this.restartTheSameLevel,this);
+        this.levelEndRestart.node.on(Node.EventType.TOUCH_END,this.restartTheSameLevel,this);
+        this.levelEndNext.node.on(Node.EventType.TOUCH_END,this.loadNextLevel,this);
+        console.log('start called in playScript');
+        LevelManager.setScore(0);
+        this.score = 0;
+    }
+
+    resetChances()
+    {
+        for(let i =0;i<this.arrayOfChances.length;i++)
+                {
+                    let p = this.arrayOfChances.pop();
+                    p.removeFromParent();
+                }
+                this.arrayOfChances = [];
+        this.score = 0;
+    }
+    moveToHome(event)
+    {
+        director.loadScene('levelScreenNew');
+    }
+
+    restartTheSameLevel(event)
+    {
+        this.resetChances();
+        this.arrayOfBricksOnScreen.forEach((element) => {
+            element.removeFromParent();
+        });
+        this.arrayOfBricksOnScreen = [];
+
+        this.fetchScript(LevelManager.getLevel());
+        this.addBricks();
+
+        setTimeout(() => {
+            this.gameOverPopUp.active = false;
+            this.levelEndPopUp.active = false;
+        },100);
+    }
+
+    loadNextLevel()
+    {
+        LevelManager.increaseLevel();
+        this.resetChances();
+        this.fetchScript(LevelManager.getLevel());
+        this.addBricks();
+        setTimeout(() => {
+            this.gameOverPopUp.active = false;
+            this.levelEndPopUp.active = false;
+        },100);
     }
 
     onBeginContactTry(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)
     {
         console.log(otherCollider);
+    }
+
+    showGameOverPopUp()
+    {
+        this.gameOverScore.getComponent(Label).string = `${LevelManager.getScore()}`;
+        this.gameOverHighScore.getComponent(Label).string = `${LevelManager.getScore()}`;
+        this.gameOverPopUp.active = true;
+        clearInterval(this.intervalID);
+    }
+
+    showlevelEndPopUp()
+    {
+        this.LevelEndScore.getComponent(Label).string = `${LevelManager.getScore()}`;
+        this.LevelEndHighScore.getComponent(Label).string = `${LevelManager.getScore()}`;
+        this.levelEndPopUp.active = true;
+        clearInterval(this.intervalID);
     }
 
     fetchScript(lev : number)
@@ -145,11 +253,11 @@ export class PlayScript extends Component {
             this.collider.on(Contact2DType.BEGIN_CONTACT,this.onBeginContact,this);
             //this.collider.on(Contact2DType.END_CONTACT,this.onEndContact,this);
         }
+        //this.scoreLabel.getComponent(Label).string = `score : ${LevelManager.getScore()}`;
     }
 
     addChances()
     {
-        console.log('addchances called');
         let x = -((this.screenWidth)/2);
         let y = -(((this.node.getComponent(UITransform).height)/2));
         x+=38;
@@ -163,6 +271,7 @@ export class PlayScript extends Component {
             this.arrayOfChances.push(b);
             x+=76;
         }
+        console.log('addchances called');
     }
     
     onEndContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null)
@@ -173,6 +282,7 @@ export class PlayScript extends Component {
             this.ballNode.removeFromParent();
         }
     }
+
     onBeginContact (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) 
     {
         console.log(this.ball.getPosition());
@@ -230,8 +340,6 @@ export class PlayScript extends Component {
         this.sliderSprite.setPosition(new Vec3(current.x-this.screenWidth/2,this.posOfSlider.y,1));
     }
 
-    
-
     update()
     {
         this.arrayOfRewards.forEach(element => {
@@ -256,20 +364,32 @@ export class PlayScript extends Component {
         {
             console.log('ball is out of the screen');
             this.maxNumberOfBall--;
+            console.log('chances left : ' + this.maxNumberOfBall);
             if(this.maxNumberOfBall>=1)
             {
-
                 this.ballNode.setPosition(this.ballInitialPosition);
                 this.ballNode.getComponent(RigidBody2D).linearVelocity = new Vec2(0,0);
-                // let newBall = instantiate(this.ballPrefab);
-                // this.node.addChild(newBall);
-                // this.ball = newBall;
+                this.ballNode.getComponent(RigidBody2D).angularVelocity = 0;
                 let tempball = this.arrayOfChances.pop();
                 tempball.removeFromParent();
+                console.log('one ball removed ');
             }
+
             else
             {
                 this.ballNode.removeFromParent();
+
+                LevelManager.setScore(this.score);
+                
+                this.showGameOverPopUp();
+                console.log(this.gameOverPopUp.getSiblingIndex());
+                for(let i =0;i<this.arrayOfChances.length;i++)
+                {
+                    let p = this.arrayOfChances.pop();
+                    p.removeFromParent();
+                }
+                this.arrayOfChances = [];
+                console.log('game is over now ');
             }
         }
 
@@ -279,21 +399,17 @@ export class PlayScript extends Component {
             this.ballNode.removeFromParent();
 
             this.level++;
-            if(this.level == 3)
+            if(this.level == 7)
             {
                 this.level = 1;
             }
-            LevelManager.setLevel(this.level);
+
             LevelManager.setLevelPlayed(this.level);
-            /*this.fetchScript(this.level);
-            this.addBricks();*/
-            for(let i = 1;i<this.arrayOfChances.length;i++)
-            {
-                let temp = this.arrayOfChances[i];
-                temp.removeFromParent();
-            }
-            this.arrayOfChances = [];
-            director.loadScene('levelScreenNew');
+            LevelManager.setScore(this.score);
+
+            LevelManager.setScore(this.score);
+            clearInterval(this.intervalID);
+            this.showlevelEndPopUp();
         }
     }
 
@@ -312,6 +428,7 @@ export class PlayScript extends Component {
             this.ch.getComponent(Sprite).spriteFrame = this.NormalBricks[this.tileDetails[i]["color"]-1];
             this.ch.colorNumber = this.tileDetails[i]["color"]-1;
             this.arrayOfBricksOnScreen.push(this.ch);
+            
             switch(type)
             {
                 case BRICKS.IN_TWO_COLLISION :
@@ -330,5 +447,11 @@ export class PlayScript extends Component {
                     console.log('No details for this bricks.');
             }
         }
+        console.log('last prefab : ' + this.ch.getSiblingIndex());
+        this.gameOverPopUp.setSiblingIndex(this.ch.getSiblingIndex()+5);
+        this.intervalID = setInterval( () =>{
+            this.timer++;
+            console.log(this.timer);
+        },1000);
     }
 }

@@ -1,6 +1,6 @@
 {
   "cce:/internal/x/cc": {
-    "mTimestamp": 14139.271630000003,
+    "mTimestamp": 15576.541708999983,
     "chunkId": "quick-pack:/cce/internal/x/cc.js",
     "imports": [
       {
@@ -389,7 +389,7 @@
     ]
   },
   "cce:/internal/x/prerequisite-imports": {
-    "mTimestamp": 31168635.98682,
+    "mTimestamp": 32007291.311663,
     "chunkId": "quick-pack:/cce/internal/x/prerequisite-imports.js",
     "imports": [
       {
@@ -490,7 +490,7 @@
     ]
   },
   "file:///Users/naushad/BricksBreaker/assets/Scripts/SplashScreen.ts": {
-    "mTimestamp": 1632916091934.2688,
+    "mTimestamp": 1632994689928.0352,
     "chunkId": "assets/Scripts/SplashScreen.js",
     "imports": [
       {
@@ -525,7 +525,7 @@
     ]
   },
   "file:///Users/naushad/BricksBreaker/assets/Scripts/PlayScript.ts": {
-    "mTimestamp": 1632918528939.2954,
+    "mTimestamp": 1633006504243.8503,
     "chunkId": "assets/Scripts/PlayScript.js",
     "imports": [
       {
@@ -540,11 +540,11 @@
         "loc": {
           "start": {
             "line": 2,
-            "column": 304
+            "column": 312
           },
           "end": {
             "line": 2,
-            "column": 308
+            "column": 316
           }
         }
       },
@@ -647,7 +647,7 @@
     ]
   },
   "file:///Users/naushad/BricksBreaker/assets/Scripts/SingletonClass.ts": {
-    "mTimestamp": 1632918998206.7246,
+    "mTimestamp": 1633006982062.036,
     "chunkId": "assets/Scripts/SingletonClass.js",
     "imports": [
       {
@@ -658,11 +658,11 @@
         "loc": {
           "start": {
             "line": 1,
-            "column": 20
+            "column": 28
           },
           "end": {
             "line": 1,
-            "column": 24
+            "column": 32
           }
         }
       }
@@ -682,7 +682,7 @@
     ]
   },
   "cce:/internal/code-quality/cr.mjs": {
-    "mTimestamp": 1632889347998,
+    "mTimestamp": 1632974981734,
     "chunkId": "quick-pack:/cce/internal/code-quality/cr.js",
     "imports": [],
     "modLoMetadata": {
@@ -691,7 +691,7 @@
     "resolvedImports": []
   },
   "file:///Users/naushad/BricksBreaker/assets/Scripts/levelScreenNewScript.ts": {
-    "mTimestamp": 1632920516650.013,
+    "mTimestamp": 1633006327620.2654,
     "chunkId": "assets/Scripts/levelScreenNewScript.js",
     "imports": [
       {
@@ -706,11 +706,11 @@
         "loc": {
           "start": {
             "line": 2,
-            "column": 106
+            "column": 119
           },
           "end": {
             "line": 2,
-            "column": 110
+            "column": 123
           }
         }
       },

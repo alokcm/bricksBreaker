@@ -1,0 +1,53 @@
+[
+    1,
+    [
+        "595jOWm+pNN4gf9ae7xAN6@6c48a"
+    ],
+    [
+        "_textureSource"
+    ],
+    [
+        "cc.SpriteFrame"
+    ],
+    0,
+    [
+        {
+            "name": "yellowStar",
+            "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 550,
+                "height": 534
+            },
+            "offset": {
+                "x": 0,
+                "y": 0
+            },
+            "originalSize": {
+                "width": 550,
+                "height": 534
+            },
+            "rotated": false,
+            "capInsets": [
+                0,
+                0,
+                0,
+                0
+            ],
+            "packable": true
+        }
+    ],
+    [
+        0
+    ],
+    0,
+    [
+        0
+    ],
+    [
+        0
+    ],
+    [
+        0
+    ]
+]
