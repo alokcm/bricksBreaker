@@ -1,8 +1,8 @@
 {
-    "level" : 3,
+    "level" : 4,
     "rows" : 4,
     "columns" : 6,
-    "maxBall" : 4,
+    "maxBall" : 3,
     "tileDetails" :
     [
         {

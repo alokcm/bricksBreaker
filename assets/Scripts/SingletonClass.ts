@@ -1,4 +1,4 @@
-import { Prefab, sys } from "cc";
+import { JsonAsset, Prefab, sys } from "cc";
 
 export class SingletonClass {
 
@@ -7,7 +7,7 @@ export class SingletonClass {
     private _currLevel : number = 1;
     private _levelsPlayed = 1;
     private _eachlevelHighScore = [0,0,0,0,0,0];
-    private _eachlevelStar = [1,1,1,1,1,1];
+    private _eachlevelStar = [1,0,0,0,0,0];
 
     constructor() {
         if(SingletonClass._instance){
@@ -24,6 +24,11 @@ export class SingletonClass {
     public setScore(value:number):void
     {
         this._score = value;
+        if(value > this._eachlevelHighScore[this._currLevel-1])
+        {
+            this._eachlevelHighScore[this._currLevel-1] = value;
+            sys.localStorage.setItem('level_highScore',JSON.stringify(this._eachlevelHighScore));
+        }
     }
 
     public getScore():number
@@ -67,14 +72,65 @@ export class SingletonClass {
         return level;
     }
 
-    public setLevelHighScore(level : number,highScore : number):void
+    public getLevelHighScore():number
     {
-        this._eachlevelHighScore[level-1] = highScore;
+        return this._eachlevelHighScore[this._currLevel-1];
     }
 
-    public getLevelHighScore(level : number):number
+    public setLevelHighScore(highScore : number):void
     {
-        return this._eachlevelHighScore[level-1];
+        if(highScore > this._eachlevelHighScore[this._currLevel-1])
+        {
+            this._eachlevelHighScore[this._currLevel-1] = highScore;
+            sys.localStorage.setItem('level_highScore',JSON.stringify(this._eachlevelHighScore));
+        }
     }
 
+    public getLevelStar(level : number):number
+    {
+        return this._eachlevelStar[level-1];
+    }
+
+    public setLevelStar(star : number):void
+    {
+        if(star > this._eachlevelStar[this._currLevel-1])
+        {
+            this._eachlevelStar[this._currLevel-1] = star;
+            sys.localStorage.setItem('level_stars',JSON.stringify(this._eachlevelHighScore));
+        }
+    }
+
+    public updateLevelHighScoreAndStar():void
+    {
+        let getLevelHighScoreFromCache = sys.localStorage.getItem('level_highScore');
+        let getLevelStarFromCache = sys.localStorage.getItem('level_stars');
+        if(getLevelHighScoreFromCache)
+        {    
+            let tempArr : number[] = [];
+            for(let i=0;i<getLevelHighScoreFromCache.length;i++)
+            {
+                let p = parseInt(getLevelHighScoreFromCache[i]);
+                if(p>=0)
+                {
+                    tempArr.push(p);
+                }
+            }
+            this._eachlevelHighScore = tempArr;
+        }
+
+        if(getLevelStarFromCache)
+        {    
+            let tempArr : number[] = [];
+            for(let i=0;i<getLevelStarFromCache.length;i++)
+            {
+                let p = parseInt(getLevelStarFromCache[i]);
+                if(p>=0)
+                {
+                    tempArr.push(p);
+                }
+            }
+            this._eachlevelStar = tempArr;
+        }
+
+    }
 }

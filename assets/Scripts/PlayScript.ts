@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, SpriteComponent, Sprite, Vec3, UIComponent, UIModelComponent, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, RigidBody, RigidBody2D, UITransform, rect, Vec2, Slider, Intersection2D, Label, director, Button } from 'cc';
+import { _decorator, Component, Node, SpriteComponent, Sprite, Vec3,AudioSourceComponent, UIComponent, UIModelComponent, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, IPhysics2DContact, PhysicsSystem2D, RigidBody, RigidBody2D, UITransform, rect, Vec2, Slider, Intersection2D, Label, director, Button, AudioSource, AudioClip } from 'cc';
 import { SingletonClass } from './SingletonClass';
 const { ccclass, property } = _decorator;
 
@@ -100,6 +100,9 @@ export class PlayScript extends Component {
     @property(SpriteFrame)
     yellowStar : SpriteFrame = null;
 
+    @property(AudioClip)
+    audioGame : AudioClip = null;
+
     posOfSlider : Vec3 = null;
     screenWidth : any;
     tileDetails: string[] = [];
@@ -164,13 +167,17 @@ export class PlayScript extends Component {
     resetChances()
     {
         for(let i =0;i<this.arrayOfChances.length;i++)
-                {
-                    let p = this.arrayOfChances.pop();
-                    p.removeFromParent();
-                }
-                this.arrayOfChances = [];
+        {
+            let p = this.arrayOfChances.pop();
+            p.getComponent(Sprite).destroy();
+            p.removeFromParent();
+        }
+        this.arrayOfChances = [];
         this.score = 0;
+        LevelManager.setScore(this.score);
+        this.scoreLabel.getComponent(Label).string = `score : ${this.score}`;
     }
+
     moveToHome(event)
     {
         director.loadScene('levelScreenNew');
@@ -179,14 +186,16 @@ export class PlayScript extends Component {
     restartTheSameLevel(event)
     {
         this.resetChances();
-        this.arrayOfBricksOnScreen.forEach((element) => {
-            element.removeFromParent();
-        });
-        this.arrayOfBricksOnScreen = [];
+        console.log('before ' + this.arrayOfBricksOnScreen.length);
+        for(let i = 0;i<this.arrayOfBricksOnScreen.length;i++)
+        {
+            let t = this.arrayOfBricksOnScreen[i];
+            //let p = t.node.getParent();
+        }
 
+        this.arrayOfBricksOnScreen = [];
         this.fetchScript(LevelManager.getLevel());
         this.addBricks();
-
         setTimeout(() => {
             this.gameOverPopUp.active = false;
             this.levelEndPopUp.active = false;
@@ -213,17 +222,19 @@ export class PlayScript extends Component {
     showGameOverPopUp()
     {
         this.gameOverScore.getComponent(Label).string = `${LevelManager.getScore()}`;
-        this.gameOverHighScore.getComponent(Label).string = `${LevelManager.getScore()}`;
+        this.gameOverHighScore.getComponent(Label).string = `${LevelManager.getLevelHighScore()}`;
         this.gameOverPopUp.active = true;
-        clearInterval(this.intervalID);
     }
 
     showlevelEndPopUp()
     {
-        this.LevelEndScore.getComponent(Label).string = `${LevelManager.getScore()}`;
-        this.LevelEndHighScore.getComponent(Label).string = `${LevelManager.getScore()}`;
-        this.levelEndPopUp.active = true;
-        clearInterval(this.intervalID);
+        
+        setTimeout(() => {
+            LevelManager.setScore(this.score);
+            this.LevelEndScore.getComponent(Label).string = `${LevelManager.getScore()}`;
+            this.LevelEndHighScore.getComponent(Label).string = `${LevelManager.getLevelHighScore()}`;
+            this.levelEndPopUp.active = true;
+        },510);
     }
 
     fetchScript(lev : number)
@@ -285,10 +296,13 @@ export class PlayScript extends Component {
 
     onBeginContact (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) 
     {
-        console.log(this.ball.getPosition());
+        //console.log(this.ball.getPosition());
         if(otherCollider.name == 'brick<BoxCollider2D>')
         {
+            // otherCollider.node.parent.removeChild(otherCollider.node);
+            console.log('from function');
             this.updateBricks(otherCollider);
+            // this.arrayOfBricksOnScreen.pop();
         }
 
         if(this.arrayOfBricksOnScreen.length == 0)
@@ -297,8 +311,23 @@ export class PlayScript extends Component {
         }
     }
 
+
+    updateScore(newScore : number):void
+    {
+        let scoreUpdateTime = 500/newScore;
+        let timerId = setInterval(() => {
+            this.score++;
+            this.scoreLabel.getComponent(Label).string = `score : ${this.score}`;
+        },scoreUpdateTime);
+
+        setTimeout(() => {
+            clearInterval(timerId);
+        },500);
+    }
+
     updateBricks(collider)
     {
+        //console.log(collider);
         collider.node.brickTime--;
         if(collider.node.brickTime == 1)
         {
@@ -321,8 +350,10 @@ export class PlayScript extends Component {
             }
             this.arrayOfBricksOnScreen.pop();
             collider.destroy();
-            this.score += 2;
-            this.scoreLabel.getComponent(Label).string = `score : ${this.score}`;
+            //collider.node.destroy();
+            //this.score += 2;
+            //this.scoreLabel.getComponent(Label).string = `score : ${this.score}`;
+            this.updateScore(2);
         }
     }
 
@@ -355,8 +386,9 @@ export class PlayScript extends Component {
                     removeReward.getComponent(Sprite).destroy();
                     removeReward.destroy();
                     console.log(this.arrayOfRewards);
-                    this.score += 10;
-                    this.scoreLabel.getComponent(Label).string = `score : ${this.score}`;
+                    //this.score += 10;
+                    //this.scoreLabel.getComponent(Label).string = `score : ${this.score}`;
+                    this.updateScore(10);
                 }
         });
 
@@ -372,7 +404,9 @@ export class PlayScript extends Component {
                 this.ballNode.getComponent(RigidBody2D).angularVelocity = 0;
                 let tempball = this.arrayOfChances.pop();
                 tempball.removeFromParent();
-                console.log('one ball removed ');
+                console.log('one ball removed');
+                //this.score--;
+                //LevelManager.setScore(this.score);
             }
 
             else
@@ -390,6 +424,10 @@ export class PlayScript extends Component {
                 }
                 this.arrayOfChances = [];
                 console.log('game is over now ');
+                clearInterval(this.intervalID);
+                
+                this.timer = 0;
+                
             }
         }
 
@@ -406,9 +444,8 @@ export class PlayScript extends Component {
 
             LevelManager.setLevelPlayed(this.level);
             LevelManager.setScore(this.score);
-
-            LevelManager.setScore(this.score);
             clearInterval(this.intervalID);
+            this.timer = 0;
             this.showlevelEndPopUp();
         }
     }
@@ -453,5 +490,6 @@ export class PlayScript extends Component {
             this.timer++;
             console.log(this.timer);
         },1000);
+
     }
 }

@@ -3,10 +3,7 @@ import { _decorator, Component, Node, Prefab, instantiate, Label, director, sys,
 import { SingletonClass } from './SingletonClass';
 const { ccclass, property } = _decorator;
 
-
 var LevelManager:SingletonClass = SingletonClass.getInstance();
-//console.log('Level : ', LevelManager.getLevel());
-LevelManager.setLevelPlayed(1);
 
 @ccclass('LevelScreenNewScript')
 export class LevelScreenNewScript extends Component {
@@ -36,8 +33,7 @@ export class LevelScreenNewScript extends Component {
             this.tempNode.getChildByName('Label').getComponent(Label).string = `${i}`;
             this.tempNode.star1 = this.tempNode.getChildByName('star1').getComponent(Sprite);
             this.tempNode.buttonNumber = i;
-            this.tempNode.getChildByName('star1').getComponent(Sprite).spriteFrame = this.yellowStar;
-            this.tempNode.getChildByName('star2').getComponent(Sprite).spriteFrame = this.yellowStar;
+            
             this.tempNode.on(Node.EventType.TOUCH_START,this.loadGame,this);
             console.log(this.levelPlayed);
             if(i<=this.levelPlayed)
@@ -50,6 +46,14 @@ export class LevelScreenNewScript extends Component {
                 this.tempNode.unlocked = false;
                 console.log(this.tempNode.addComponent(UIOpacity).opacity = 190);
             }
+            switch(LevelManager.getLevelStar(i))
+            {
+                case 3 : this.tempNode.getChildByName('star3').getComponent(Sprite).spriteFrame = this.yellowStar;
+                case 2 : this.tempNode.getChildByName('star2').getComponent(Sprite).spriteFrame = this.yellowStar;
+                case 1 : this.tempNode.getChildByName('star1').getComponent(Sprite).spriteFrame = this.yellowStar;
+                default : console.log(' no data for these ');
+            }
+            
             this.content.addChild(this.tempNode);
             console.log(this.tempNode);
         }

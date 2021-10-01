@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, UITransform, Vec2, Intersection2D, Label, director, Button, SingletonClass, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _temp, _crd, ccclass, property, LevelManager, BRICKS, PlayScript;
+  var _reporterNs, _cclegacy, _decorator, Component, Node, Sprite, Vec3, SpriteFrame, Prefab, instantiate, JsonAsset, Collider2D, Contact2DType, RigidBody2D, UITransform, Vec2, Intersection2D, Label, director, Button, AudioClip, SingletonClass, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _temp, _crd, ccclass, property, LevelManager, BRICKS, PlayScript;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -44,6 +44,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
       Label = _cc.Label;
       director = _cc.director;
       Button = _cc.Button;
+      AudioClip = _cc.AudioClip;
     }, function (_unresolved_2) {
       SingletonClass = _unresolved_2.SingletonClass;
     }],
@@ -79,7 +80,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
         BRICKS[BRICKS["HAS_REWARDS"] = 3] = "HAS_REWARDS";
       })(BRICKS || (BRICKS = {}));
 
-      _export("PlayScript", PlayScript = (_dec = ccclass('PlayScript'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(SpriteFrame), _dec5 = property(SpriteFrame), _dec6 = property(JsonAsset), _dec7 = property(SpriteFrame), _dec8 = property(Prefab), _dec9 = property(Prefab), _dec10 = property(Prefab), _dec11 = property(Prefab), _dec12 = property(Node), _dec13 = property(Node), _dec14 = property(Button), _dec15 = property(Button), _dec16 = property(Button), _dec17 = property(Button), _dec18 = property(Button), _dec19 = property(Label), _dec20 = property(Label), _dec21 = property(Label), _dec22 = property(Label), _dec23 = property(SpriteFrame), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
+      _export("PlayScript", PlayScript = (_dec = ccclass('PlayScript'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(SpriteFrame), _dec5 = property(SpriteFrame), _dec6 = property(JsonAsset), _dec7 = property(SpriteFrame), _dec8 = property(Prefab), _dec9 = property(Prefab), _dec10 = property(Prefab), _dec11 = property(Prefab), _dec12 = property(Node), _dec13 = property(Node), _dec14 = property(Button), _dec15 = property(Button), _dec16 = property(Button), _dec17 = property(Button), _dec18 = property(Button), _dec19 = property(Label), _dec20 = property(Label), _dec21 = property(Label), _dec22 = property(Label), _dec23 = property(SpriteFrame), _dec24 = property(AudioClip), _dec(_class = (_class2 = (_temp = /*#__PURE__*/function (_Component) {
         _inheritsLoose(PlayScript, _Component);
 
         function PlayScript() {
@@ -134,6 +135,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           _initializerDefineProperty(_assertThisInitialized(_this), "LevelEndHighScore", _descriptor21, _assertThisInitialized(_this));
 
           _initializerDefineProperty(_assertThisInitialized(_this), "yellowStar", _descriptor22, _assertThisInitialized(_this));
+
+          _initializerDefineProperty(_assertThisInitialized(_this), "audioGame", _descriptor23, _assertThisInitialized(_this));
 
           _defineProperty(_assertThisInitialized(_this), "posOfSlider", null);
 
@@ -221,11 +224,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
         _proto.resetChances = function resetChances() {
           for (var i = 0; i < this.arrayOfChances.length; i++) {
             var p = this.arrayOfChances.pop();
+            p.getComponent(Sprite).destroy();
             p.removeFromParent();
           }
 
           this.arrayOfChances = [];
           this.score = 0;
+          LevelManager.setScore(this.score);
+          this.scoreLabel.getComponent(Label).string = "score : " + this.score;
         };
 
         _proto.moveToHome = function moveToHome(event) {
@@ -236,9 +242,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           var _this2 = this;
 
           this.resetChances();
-          this.arrayOfBricksOnScreen.forEach(function (element) {
-            element.removeFromParent();
-          });
+          console.log('before ' + this.arrayOfBricksOnScreen.length);
+
+          for (var i = 0; i < this.arrayOfBricksOnScreen.length; i++) {
+            var t = this.arrayOfBricksOnScreen[i]; //let p = t.node.getParent();
+          }
+
           this.arrayOfBricksOnScreen = [];
           this.fetchScript(LevelManager.getLevel());
           this.addBricks();
@@ -267,16 +276,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
         _proto.showGameOverPopUp = function showGameOverPopUp() {
           this.gameOverScore.getComponent(Label).string = "" + LevelManager.getScore();
-          this.gameOverHighScore.getComponent(Label).string = "" + LevelManager.getScore();
+          this.gameOverHighScore.getComponent(Label).string = "" + LevelManager.getLevelHighScore();
           this.gameOverPopUp.active = true;
-          clearInterval(this.intervalID);
         };
 
         _proto.showlevelEndPopUp = function showlevelEndPopUp() {
-          this.LevelEndScore.getComponent(Label).string = "" + LevelManager.getScore();
-          this.LevelEndHighScore.getComponent(Label).string = "" + LevelManager.getScore();
-          this.levelEndPopUp.active = true;
-          clearInterval(this.intervalID);
+          var _this4 = this;
+
+          setTimeout(function () {
+            LevelManager.setScore(_this4.score);
+            _this4.LevelEndScore.getComponent(Label).string = "" + LevelManager.getScore();
+            _this4.LevelEndHighScore.getComponent(Label).string = "" + LevelManager.getLevelHighScore();
+            _this4.levelEndPopUp.active = true;
+          }, 510);
         };
 
         _proto.fetchScript = function fetchScript(lev) {
@@ -332,10 +344,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
         };
 
         _proto.onBeginContact = function onBeginContact(selfCollider, otherCollider, contact) {
-          console.log(this.ball.getPosition());
-
+          //console.log(this.ball.getPosition());
           if (otherCollider.name == 'brick<BoxCollider2D>') {
-            this.updateBricks(otherCollider);
+            // otherCollider.node.parent.removeChild(otherCollider.node);
+            console.log('from function');
+            this.updateBricks(otherCollider); // this.arrayOfBricksOnScreen.pop();
           }
 
           if (this.arrayOfBricksOnScreen.length == 0) {
@@ -343,7 +356,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           }
         };
 
+        _proto.updateScore = function updateScore(newScore) {
+          var _this5 = this;
+
+          var scoreUpdateTime = 500 / newScore;
+          var timerId = setInterval(function () {
+            _this5.score++;
+            _this5.scoreLabel.getComponent(Label).string = "score : " + _this5.score;
+          }, scoreUpdateTime);
+          setTimeout(function () {
+            clearInterval(timerId);
+          }, 500);
+        };
+
         _proto.updateBricks = function updateBricks(collider) {
+          //console.log(collider);
           collider.node.brickTime--;
 
           if (collider.node.brickTime == 1) {
@@ -365,9 +392,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             }
 
             this.arrayOfBricksOnScreen.pop();
-            collider.destroy();
-            this.score += 2;
-            this.scoreLabel.getComponent(Label).string = "score : " + this.score;
+            collider.destroy(); //collider.node.destroy();
+            //this.score += 2;
+            //this.scoreLabel.getComponent(Label).string = `score : ${this.score}`;
+
+            this.updateScore(2);
           }
         };
 
@@ -384,23 +413,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
         };
 
         _proto.update = function update() {
-          var _this4 = this;
+          var _this6 = this;
 
           this.arrayOfRewards.forEach(function (element) {
-            var _element$getComponent, _this4$sliderSprite$g;
+            var _element$getComponent, _this6$sliderSprite$g;
 
             element.setPosition(element.getPosition().x, element.getPosition().y - 10, 1);
 
-            if (Intersection2D.rectRect((_element$getComponent = element.getComponent(UITransform)) === null || _element$getComponent === void 0 ? void 0 : _element$getComponent.getBoundingBoxToWorld(), (_this4$sliderSprite$g = _this4.sliderSprite.getComponent(UITransform)) === null || _this4$sliderSprite$g === void 0 ? void 0 : _this4$sliderSprite$g.getBoundingBoxToWorld())) {
+            if (Intersection2D.rectRect((_element$getComponent = element.getComponent(UITransform)) === null || _element$getComponent === void 0 ? void 0 : _element$getComponent.getBoundingBoxToWorld(), (_this6$sliderSprite$g = _this6.sliderSprite.getComponent(UITransform)) === null || _this6$sliderSprite$g === void 0 ? void 0 : _this6$sliderSprite$g.getBoundingBoxToWorld())) {
               console.log('collided rewards and slider');
 
-              var removeReward = _this4.arrayOfRewards.shift();
+              var removeReward = _this6.arrayOfRewards.shift();
 
               removeReward.getComponent(Sprite).destroy();
               removeReward.destroy();
-              console.log(_this4.arrayOfRewards);
-              _this4.score += 10;
-              _this4.scoreLabel.getComponent(Label).string = "score : " + _this4.score;
+              console.log(_this6.arrayOfRewards); //this.score += 10;
+              //this.scoreLabel.getComponent(Label).string = `score : ${this.score}`;
+
+              _this6.updateScore(10);
             }
           });
 
@@ -415,7 +445,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
               this.ballNode.getComponent(RigidBody2D).angularVelocity = 0;
               var tempball = this.arrayOfChances.pop();
               tempball.removeFromParent();
-              console.log('one ball removed ');
+              console.log('one ball removed'); //this.score--;
+              //LevelManager.setScore(this.score);
             } else {
               this.ballNode.removeFromParent();
               LevelManager.setScore(this.score);
@@ -429,6 +460,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
               this.arrayOfChances = [];
               console.log('game is over now ');
+              clearInterval(this.intervalID);
+              this.timer = 0;
             }
           }
 
@@ -443,14 +476,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
             LevelManager.setLevelPlayed(this.level);
             LevelManager.setScore(this.score);
-            LevelManager.setScore(this.score);
             clearInterval(this.intervalID);
+            this.timer = 0;
             this.showlevelEndPopUp();
           }
         };
 
         _proto.addBricks = function addBricks() {
-          var _this5 = this;
+          var _this7 = this;
 
           for (var i = 0; i < this.tileDetails.length; i++) {
             var type = this.tileDetails[i]["type"];
@@ -489,8 +522,8 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           console.log('last prefab : ' + this.ch.getSiblingIndex());
           this.gameOverPopUp.setSiblingIndex(this.ch.getSiblingIndex() + 5);
           this.intervalID = setInterval(function () {
-            _this5.timer++;
-            console.log(_this5.timer);
+            _this7.timer++;
+            console.log(_this7.timer);
           }, 1000);
         };
 
@@ -643,6 +676,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           return null;
         }
       }), _descriptor22 = _applyDecoratedDescriptor(_class2.prototype, "yellowStar", [_dec23], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function initializer() {
+          return null;
+        }
+      }), _descriptor23 = _applyDecoratedDescriptor(_class2.prototype, "audioGame", [_dec24], {
         configurable: true,
         enumerable: true,
         writable: true,

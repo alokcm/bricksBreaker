@@ -2,7 +2,7 @@
     "level" : 1,
     "rows" : 3,
     "columns" : 2,
-    "maxBall" : 3,
+    "maxBall" : 5,
     "tileDetails" :
         [
             {

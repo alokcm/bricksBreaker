@@ -44,9 +44,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
       } = _decorator);
       LevelManager = (_crd && SingletonClass === void 0 ? (_reportPossibleCrUseOfSingletonClass({
         error: Error()
-      }), SingletonClass) : SingletonClass).getInstance(); //console.log('Level : ', LevelManager.getLevel());
-
-      LevelManager.setLevelPlayed(1);
+      }), SingletonClass) : SingletonClass).getInstance();
 
       _export("LevelScreenNewScript", LevelScreenNewScript = (_dec = ccclass('LevelScreenNewScript'), _dec2 = property(Prefab), _dec3 = property(Node), _dec4 = property(SpriteFrame), _dec(_class = (_class2 = (_temp = class LevelScreenNewScript extends Component {
         constructor(...args) {
@@ -75,8 +73,6 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             this.tempNode.getChildByName('Label').getComponent(Label).string = `${i}`;
             this.tempNode.star1 = this.tempNode.getChildByName('star1').getComponent(Sprite);
             this.tempNode.buttonNumber = i;
-            this.tempNode.getChildByName('star1').getComponent(Sprite).spriteFrame = this.yellowStar;
-            this.tempNode.getChildByName('star2').getComponent(Sprite).spriteFrame = this.yellowStar;
             this.tempNode.on(Node.EventType.TOUCH_START, this.loadGame, this);
             console.log(this.levelPlayed);
 
@@ -86,6 +82,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
             } else {
               this.tempNode.unlocked = false;
               console.log(this.tempNode.addComponent(UIOpacity).opacity = 190);
+            }
+
+            switch (LevelManager.getLevelStar(i)) {
+              case 3:
+                this.tempNode.getChildByName('star3').getComponent(Sprite).spriteFrame = this.yellowStar;
+
+              case 2:
+                this.tempNode.getChildByName('star2').getComponent(Sprite).spriteFrame = this.yellowStar;
+
+              case 1:
+                this.tempNode.getChildByName('star1').getComponent(Sprite).spriteFrame = this.yellowStar;
+
+              default:
+                console.log(' no data for these ');
             }
 
             this.content.addChild(this.tempNode);

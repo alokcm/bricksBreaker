@@ -2,8 +2,8 @@
   "assets/Scripts/LevelScreen.js": {
     "imports": {
       "cc": "quick-pack:/cce/internal/x/cc.js",
-      "__unresolved_1": "assets/Scripts/SingletonClass.js",
-      "__unresolved_0": "quick-pack:/cce/internal/code-quality/cr.js"
+      "__unresolved_0": "quick-pack:/cce/internal/code-quality/cr.js",
+      "__unresolved_1": "assets/Scripts/SingletonClass.js"
     },
     "physicalLocation": "fs/0/assets/Scripts/LevelScreen.js",
     "mTimestamp": 1632916668644
@@ -76,21 +76,23 @@
       }
     },
     "physicalLocation": "cce/internal/x/cc.js",
-    "mTimestamp": 1632975016376,
+    "mTimestamp": 1633061121990,
     "isEntry": true,
     "exposeAs": "cce:/internal/x/cc"
   },
   "quick-pack:/cce/internal/code-quality/cr.js": {
     "imports": {},
     "physicalLocation": "cce/internal/code-quality/cr.js",
-    "mTimestamp": 1632975016463
+    "mTimestamp": 1633061122206
   },
   "assets/Scripts/SplashScreen.js": {
     "imports": {
-      "cc": "quick-pack:/cce/internal/x/cc.js"
+      "__unresolved_0": "quick-pack:/cce/internal/code-quality/cr.js",
+      "cc": "quick-pack:/cce/internal/x/cc.js",
+      "__unresolved_1": "assets/Scripts/SingletonClass.js"
     },
     "physicalLocation": "fs/0/assets/Scripts/SplashScreen.js",
-    "mTimestamp": 1632994694870
+    "mTimestamp": 1633071413952
   },
   "assets/Scripts/levelScreenNewScript.js": {
     "imports": {
@@ -99,7 +101,7 @@
       "__unresolved_1": "assets/Scripts/SingletonClass.js"
     },
     "physicalLocation": "fs/0/assets/Scripts/levelScreenNewScript.js",
-    "mTimestamp": 1633006329641
+    "mTimestamp": 1633090123450
   },
   "assets/Scripts/PlayScript.js": {
     "imports": {
@@ -108,7 +110,7 @@
       "__unresolved_1": "assets/Scripts/SingletonClass.js"
     },
     "physicalLocation": "fs/0/assets/Scripts/PlayScript.js",
-    "mTimestamp": 1633006773539
+    "mTimestamp": 1633091620054
   },
   "quick-pack:/cce/internal/x/prerequisite-imports.js": {
     "imports": {
@@ -119,7 +121,7 @@
       "__unresolved_2": "assets/Scripts/SingletonClass.js"
     },
     "physicalLocation": "cce/internal/x/prerequisite-imports.js",
-    "mTimestamp": 1633006990425,
+    "mTimestamp": 1633092353249,
     "isEntry": true,
     "exposeAs": "cce:/internal/x/prerequisite-imports"
   },
@@ -128,6 +130,6 @@
       "cc": "quick-pack:/cce/internal/x/cc.js"
     },
     "physicalLocation": "fs/0/assets/Scripts/SingletonClass.js",
-    "mTimestamp": 1633006990503
+    "mTimestamp": 1633092353314
   }
 }

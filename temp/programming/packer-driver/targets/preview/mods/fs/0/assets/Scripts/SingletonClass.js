@@ -25,7 +25,7 @@ System.register(["cc"], function (_export, _context) {
 
           _defineProperty(this, "_eachlevelHighScore", [0, 0, 0, 0, 0, 0]);
 
-          _defineProperty(this, "_eachlevelStar", [1, 1, 1, 1, 1, 1]);
+          _defineProperty(this, "_eachlevelStar", [1, 0, 0, 0, 0, 0]);
 
           if (SingletonClass._instance) {
             throw new Error("Error: Instantiation failed: Use SingletonDemo.getInstance() instead of new.");
@@ -42,6 +42,11 @@ System.register(["cc"], function (_export, _context) {
 
         _proto.setScore = function setScore(value) {
           this._score = value;
+
+          if (value > this._eachlevelHighScore[this._currLevel - 1]) {
+            this._eachlevelHighScore[this._currLevel - 1] = value;
+            sys.localStorage.setItem('level_highScore', JSON.stringify(this._eachlevelHighScore));
+          }
         };
 
         _proto.getScore = function getScore() {
@@ -78,12 +83,59 @@ System.register(["cc"], function (_export, _context) {
           return level;
         };
 
-        _proto.setLevelHighScore = function setLevelHighScore(level, highScore) {
-          this._eachlevelHighScore[level - 1] = highScore;
+        _proto.getLevelHighScore = function getLevelHighScore() {
+          return this._eachlevelHighScore[this._currLevel - 1];
         };
 
-        _proto.getLevelHighScore = function getLevelHighScore(level) {
-          return this._eachlevelHighScore[level - 1];
+        _proto.setLevelHighScore = function setLevelHighScore(highScore) {
+          if (highScore > this._eachlevelHighScore[this._currLevel - 1]) {
+            this._eachlevelHighScore[this._currLevel - 1] = highScore;
+            sys.localStorage.setItem('level_highScore', JSON.stringify(this._eachlevelHighScore));
+          }
+        };
+
+        _proto.getLevelStar = function getLevelStar(level) {
+          return this._eachlevelStar[level - 1];
+        };
+
+        _proto.setLevelStar = function setLevelStar(star) {
+          if (star > this._eachlevelStar[this._currLevel - 1]) {
+            this._eachlevelStar[this._currLevel - 1] = star;
+            sys.localStorage.setItem('level_stars', JSON.stringify(this._eachlevelHighScore));
+          }
+        };
+
+        _proto.updateLevelHighScoreAndStar = function updateLevelHighScoreAndStar() {
+          var getLevelHighScoreFromCache = sys.localStorage.getItem('level_highScore');
+          var getLevelStarFromCache = sys.localStorage.getItem('level_stars');
+
+          if (getLevelHighScoreFromCache) {
+            var tempArr = [];
+
+            for (var i = 0; i < getLevelHighScoreFromCache.length; i++) {
+              var p = parseInt(getLevelHighScoreFromCache[i]);
+
+              if (p >= 0) {
+                tempArr.push(p);
+              }
+            }
+
+            this._eachlevelHighScore = tempArr;
+          }
+
+          if (getLevelStarFromCache) {
+            var _tempArr = [];
+
+            for (var _i = 0; _i < getLevelStarFromCache.length; _i++) {
+              var _p = parseInt(getLevelStarFromCache[_i]);
+
+              if (_p >= 0) {
+                _tempArr.push(_p);
+              }
+            }
+
+            this._eachlevelStar = _tempArr;
+          }
         };
 
         return SingletonClass;

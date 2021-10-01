@@ -6,8 +6,8 @@
   "scopes": {
     "./mods/fs/0/assets/Scripts/LevelScreen.js": {
       "cc": "./mods/cce/internal/x/cc.js",
-      "__unresolved_1": "./mods/fs/0/assets/Scripts/SingletonClass.js",
-      "__unresolved_0": "./mods/cce/internal/code-quality/cr.js"
+      "__unresolved_0": "./mods/cce/internal/code-quality/cr.js",
+      "__unresolved_1": "./mods/fs/0/assets/Scripts/SingletonClass.js"
     },
     "./mods/cce/internal/x/cc.js": {
       "__unresolved_0": "cce:/internal/x/cc-fu/base",
@@ -28,7 +28,9 @@
       "__unresolved_15": "cce:/internal/x/cc-fu/dragon-bones"
     },
     "./mods/fs/0/assets/Scripts/SplashScreen.js": {
-      "cc": "./mods/cce/internal/x/cc.js"
+      "__unresolved_0": "./mods/cce/internal/code-quality/cr.js",
+      "cc": "./mods/cce/internal/x/cc.js",
+      "__unresolved_1": "./mods/fs/0/assets/Scripts/SingletonClass.js"
     },
     "./mods/fs/0/assets/Scripts/levelScreenNewScript.js": {
       "cc": "./mods/cce/internal/x/cc.js",

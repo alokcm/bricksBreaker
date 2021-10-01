@@ -27,7 +27,7 @@ System.register(["cc"], function (_export, _context) {
 
           _defineProperty(this, "_eachlevelHighScore", [0, 0, 0, 0, 0, 0]);
 
-          _defineProperty(this, "_eachlevelStar", [1, 1, 1, 1, 1, 1]);
+          _defineProperty(this, "_eachlevelStar", [1, 0, 0, 0, 0, 0]);
 
           if (SingletonClass._instance) {
             throw new Error("Error: Instantiation failed: Use SingletonDemo.getInstance() instead of new.");
@@ -42,6 +42,11 @@ System.register(["cc"], function (_export, _context) {
 
         setScore(value) {
           this._score = value;
+
+          if (value > this._eachlevelHighScore[this._currLevel - 1]) {
+            this._eachlevelHighScore[this._currLevel - 1] = value;
+            sys.localStorage.setItem('level_highScore', JSON.stringify(this._eachlevelHighScore));
+          }
         }
 
         getScore() {
@@ -78,12 +83,59 @@ System.register(["cc"], function (_export, _context) {
           return level;
         }
 
-        setLevelHighScore(level, highScore) {
-          this._eachlevelHighScore[level - 1] = highScore;
+        getLevelHighScore() {
+          return this._eachlevelHighScore[this._currLevel - 1];
         }
 
-        getLevelHighScore(level) {
-          return this._eachlevelHighScore[level - 1];
+        setLevelHighScore(highScore) {
+          if (highScore > this._eachlevelHighScore[this._currLevel - 1]) {
+            this._eachlevelHighScore[this._currLevel - 1] = highScore;
+            sys.localStorage.setItem('level_highScore', JSON.stringify(this._eachlevelHighScore));
+          }
+        }
+
+        getLevelStar(level) {
+          return this._eachlevelStar[level - 1];
+        }
+
+        setLevelStar(star) {
+          if (star > this._eachlevelStar[this._currLevel - 1]) {
+            this._eachlevelStar[this._currLevel - 1] = star;
+            sys.localStorage.setItem('level_stars', JSON.stringify(this._eachlevelHighScore));
+          }
+        }
+
+        updateLevelHighScoreAndStar() {
+          let getLevelHighScoreFromCache = sys.localStorage.getItem('level_highScore');
+          let getLevelStarFromCache = sys.localStorage.getItem('level_stars');
+
+          if (getLevelHighScoreFromCache) {
+            let tempArr = [];
+
+            for (let i = 0; i < getLevelHighScoreFromCache.length; i++) {
+              let p = parseInt(getLevelHighScoreFromCache[i]);
+
+              if (p >= 0) {
+                tempArr.push(p);
+              }
+            }
+
+            this._eachlevelHighScore = tempArr;
+          }
+
+          if (getLevelStarFromCache) {
+            let tempArr = [];
+
+            for (let i = 0; i < getLevelStarFromCache.length; i++) {
+              let p = parseInt(getLevelStarFromCache[i]);
+
+              if (p >= 0) {
+                tempArr.push(p);
+              }
+            }
+
+            this._eachlevelStar = tempArr;
+          }
         }
 
       });

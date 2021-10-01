@@ -1,6 +1,21 @@
 
-import { _decorator, Component, Node, director, absMaxComponent } from 'cc';
+import { _decorator, Component, Node, director, absMaxComponent, sys } from 'cc';
+import { SingletonClass } from './SingletonClass';
 const { ccclass, property } = _decorator;
+
+var LevelManager:SingletonClass = SingletonClass.getInstance();
+let levelPlayed = sys.localStorage.getItem('level_played');
+
+if(!levelPlayed)
+{
+    console.log('not played yet ');
+    LevelManager.setLevelPlayed(1);
+}
+else
+{
+    console.log('already played till level : ' + levelPlayed);
+}
+LevelManager.updateLevelHighScoreAndStar();
 
 /**
  * Predefined variables
